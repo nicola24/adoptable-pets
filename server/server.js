@@ -14,7 +14,6 @@ app.get('/petbasicfind/:animal/:zipcode', (req, res) => {
   const { animal, zipcode } = req.params;
 
   const options = {
-    // url: `${url}pet.find?${format}&key=${apiKey}&animal=${animal}&location=${zipcode}`,
     url: [
       `${url}pet.find?${format}`,
       `key=${apiKey}`,
