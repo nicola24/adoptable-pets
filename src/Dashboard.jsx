@@ -5,7 +5,8 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       zipcode: '',
-      animal: 'Dog',
+      animal: 'dog',
+      animals: [],
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -22,7 +23,13 @@ class Dashboard extends Component {
 
   handleSubmit(event) {
     const { zipcode, animal } = this.state;
+
     console.log(`${zipcode} ${animal}`);
+
+    fetch(`/petbasicfind/${animal}/${zipcode}`)
+      .then(res => res.json())
+      .then(data => this.setState({ animals: data.petfinder.pets.pet }));
+
     event.preventDefault();
   }
 
