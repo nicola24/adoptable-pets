@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import DisplayListAnimals from './DisplayListAnimals';
+import ListAnimals from './ListAnimals';
+import typeOfAnimal from './data/typeOfAnimal';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Dashboard extends Component {
       zipcode: '',
       animal: 'dog',
       animals: [],
+      breedList: [],
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -30,50 +32,43 @@ class Dashboard extends Component {
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }));
 
+    fetch(`/breedlist/${animal}`)
+      .then(res => res.json())
+      .then(data => this.setState({ breedList: data.petfinder.breeds.breed }));
+
     event.preventDefault();
   }
 
   render() {
-    const { value, animals } = this.state;
+    const { value, animals, breedList } = this.state;
     return (
       <div>
         <div>
           <form onSubmit={this.handleSubmit}>
             <input placeholder="Zip Code" type="number" value={value} onChange={this.handleZipcode} />
-            <br />
-            <br />
             Pick an animal:
-            <br />
             <select value={value} onChange={this.handleAnimal}>
-              <option value="dog">
-                Dog
-              </option>
-              <option value="cat">
-                Cat
-              </option>
-              <option value="bird">
-                Bird
-              </option>
-              <option value="reptile">
-                Reptile
-              </option>
-              <option value="horse">
-                Horse
-              </option>
-              <option value="barnyard">
-                Barnyard
-              </option>
-              <option value="smallfurry">
-                Smallfurry
-              </option>
+              {typeOfAnimal.map(x => (
+                <option value={x.value}>
+                  {x.option}
+                </option>
+              ))}
             </select>
-            <br />
-            <br />
             <input type="submit" value="Submit" />
           </form>
         </div>
         <div>
-          {animals.map(x => <DisplayListAnimals singleAnimal={x} key={x.id.$t} />)}
+          Pick a breed:
+          <select>
+            {breedList.map(x => (
+              <option value={x.$t}>
+                {x.$t}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <ListAnimals listOfAnimals={animals} />
         </div>
       </div>
     );
