@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SingleAnimal = ({ singleAnimalDisplay }) => {
   const filterImgList = singleAnimalDisplay[0].media.photos
@@ -50,6 +51,10 @@ const SingleAnimal = ({ singleAnimalDisplay }) => {
       </a>
     </div>
   );
+};
+
+SingleAnimal.propTypes = {
+  singleAnimalDisplay: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default SingleAnimal;
