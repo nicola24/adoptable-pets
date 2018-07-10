@@ -27,38 +27,52 @@ class Dashboard extends Component {
     this.handleSize = this.handleSize.bind(this);
     this.handleAge = this.handleAge.bind(this);
     this.handleAnimalClick = this.handleAnimalClick.bind(this);
+    this.fetchBreed = this.fetchBreed.bind(this);
   }
 
-  handleZipcode(event) {
-    this.setState({ zipcode: event.target.value });
+  handleZipcode(e) {
+    this.setState({ zipcode: e.target.value });
   }
 
-  handleAnimal(event) {
-    this.setState({ animal: event.target.value });
+  handleAnimal(e) {
+    this.setState({ animal: e.target.value });
   }
 
-  handleBreed(event) {
-    this.setState({ breed: event.target.value });
+  handleBreed(e) {
+    this.setState({ breed: e.target.value });
   }
 
-  handleGender(event) {
-    this.setState({ gender: event.target.value });
+  handleGender(e) {
+    this.setState({ gender: e.target.value });
   }
 
-  handleSize(event) {
-    this.setState({ size: event.target.value });
+  handleSize(e) {
+    this.setState({ size: e.target.value });
   }
 
-  handleAge(event) {
-    this.setState({ age: event.target.value });
+  handleAge(e) {
+    this.setState({ age: e.target.value });
   }
 
-  handleSubmitBasic(event) {
+  handleAnimalClick(id) {
+    const { animals } = this.state;
+
+    this.setState({ currentAnimal: animals.filter(x => x.id.$t === id) });
+  }
+
+  handleSubmitBasic(e) {
     const { zipcode, animal } = this.state;
 
     fetch(`/petbasicfind/${animal}/${zipcode}`)
       .then(res => res.json())
-      .then(data => this.setState({ animals: data.petfinder.pets.pet }));
+      .then(data => this.setState({ animals: data.petfinder.pets.pet }, this.fetchBreed()))
+      .catch(() => alert('Please enter a Valid Zip Code'));
+
+    e.preventDefault();
+  }
+
+  fetchBreed() {
+    const { animal } = this.state;
 
     fetch(`/breedlist/${animal}`)
       .then(res => res.json())
@@ -66,11 +80,9 @@ class Dashboard extends Component {
         breedList: data.petfinder.breeds.breed,
         breed: data.petfinder.breeds.breed[0].$t,
       }));
-
-    event.preventDefault();
   }
 
-  handleSubmitFull(event) {
+  handleSubmitFull(e) {
     const {
       zipcode,
       animal,
@@ -84,13 +96,7 @@ class Dashboard extends Component {
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }));
 
-    event.preventDefault();
-  }
-
-  handleAnimalClick(id) {
-    const { animals } = this.state;
-
-    this.setState({ currentAnimal: animals.filter(x => x.id.$t === id) });
+    e.preventDefault();
   }
 
   render() {
@@ -107,7 +113,13 @@ class Dashboard extends Component {
         <div>
           <form onSubmit={this.handleSubmitBasic}>
             Pick a zipcode:
-            <input placeholder="Zip Code" type="number" value={value} onChange={this.handleZipcode} required />
+            <input
+              placeholder="Zip Code"
+              type="number"
+              value={value}
+              onChange={this.handleZipcode}
+              required
+            />
             Pick an animal:
             <select value={value} onChange={this.handleAnimal}>
               {typeOfAnimal.map(x => (
@@ -160,7 +172,13 @@ class Dashboard extends Component {
         </div>
 
         <div>
-          {animals === undefined ? 'No Result' : <ListAnimals listOfAnimals={animals} animalClickHandler={this.handleAnimalClick} />}
+          {animals === undefined ? 'No Result'
+            : (
+              <ListAnimals
+                listOfAnimals={animals}
+                animalClickHandler={this.handleAnimalClick}
+              />
+            )}
         </div>
 
         <div>
