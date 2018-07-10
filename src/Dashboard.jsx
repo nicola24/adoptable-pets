@@ -135,7 +135,7 @@ class Dashboard extends Component {
                 </option>
               ))}
             </select>
-            <input type="submit" value="Submit" />
+            {menuTwo ? null : <input type="submit" value="Submit" />}
           </form>
         </div>
         {/* Second form */}
@@ -192,7 +192,7 @@ class Dashboard extends Component {
         </div>
 
         <div>
-          {currentAnimal.length === 0 ? '' : <SingleAnimal singleAnimalDisplay={currentAnimal} />}
+          {currentAnimal.length === 0 ? null : <SingleAnimal singleAnimalDisplay={currentAnimal} />}
         </div>
 
       </div>
