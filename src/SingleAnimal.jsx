@@ -14,6 +14,10 @@ const SingleAnimal = ({ singleAnimalDisplay }) => {
     ? singleAnimalDisplay[0].options.option.map(x => Object.values(x)).join(', ')
     : null;
 
+  const fullAdress = `${singleAnimalDisplay[0].contact.city.$t}
+                      ${singleAnimalDisplay[0].contact.state.$t}
+                      ${singleAnimalDisplay[0].contact.zip.$t}`;
+
   return (
     <div>
       <img src={filterImgList} alt="" />
@@ -39,9 +43,7 @@ const SingleAnimal = ({ singleAnimalDisplay }) => {
         {singleAnimalDisplay[0].contact.address1.$t}
       </h4>
       <h4>
-        {singleAnimalDisplay[0].contact.city.$t}
-        {singleAnimalDisplay[0].contact.state.$t}
-        {singleAnimalDisplay[0].contact.zip.$t}
+        {fullAdress}
       </h4>
       <h4>
         {singleAnimalDisplay[0].contact.phone.$t}
