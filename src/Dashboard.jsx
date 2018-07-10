@@ -17,6 +17,8 @@ class Dashboard extends Component {
       age: 'Baby',
       size: 'S',
       currentAnimal: [],
+      offset: 0,
+      menuTwo: false,
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -61,11 +63,14 @@ class Dashboard extends Component {
   }
 
   handleSubmitBasic(e) {
-    const { zipcode, animal } = this.state;
+    const { zipcode, animal, offset } = this.state;
 
-    fetch(`/petbasicfind/${animal}/${zipcode}`)
+    fetch(`/petbasicfind/${animal}/${zipcode}/${offset}`)
       .then(res => res.json())
-      .then(data => this.setState({ animals: data.petfinder.pets.pet }, this.fetchBreed()))
+      .then(data => this.setState({
+        animals: data.petfinder.pets.pet,
+        menuTwo: true,
+      }, this.fetchBreed()))
       .catch(() => alert('Please enter a Valid Zip Code'));
 
     e.preventDefault();
@@ -90,9 +95,10 @@ class Dashboard extends Component {
       age,
       gender,
       size,
+      offset,
     } = this.state;
 
-    fetch(`/petfullfind/${animal}/${zipcode}/${breed}/${gender}/${age}/${size}`)
+    fetch(`/petfullfind/${animal}/${zipcode}/${breed}/${gender}/${age}/${size}/${offset}`)
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }));
 
@@ -105,6 +111,7 @@ class Dashboard extends Component {
       animals,
       breedList,
       currentAnimal,
+      menuTwo,
     } = this.state;
 
     return (
@@ -128,47 +135,50 @@ class Dashboard extends Component {
                 </option>
               ))}
             </select>
-            <input type="submit" value="Submit" />
+            {menuTwo ? null : <input type="submit" value="Submit" />}
           </form>
         </div>
         {/* Second form */}
         <div>
-          <form onSubmit={this.handleSubmitFull}>
-          Pick a breed:
-            <select value={value} onChange={this.handleBreed}>
-              {breedList.map(x => (
-                <option value={x.$t} key={x.$t}>
-                  {x.$t}
-                </option>
-              ))}
-            </select>
-            Pick a gender:
-            <select value={value} onChange={this.handleGender}>
-              <option value="M">
-                Male
-              </option>
-              <option value="F">
-                Female
-              </option>
-            </select>
-            Pick an age:
-            <select value={value} onChange={this.handleAge}>
-              {animalAge.map(x => (
-                <option value={x.value} key={x.id}>
-                  {x.option}
-                </option>
-              ))}
-            </select>
-            Pick a size:
-            <select value={value} onChange={this.handleSize}>
-              {animalSize.map(x => (
-                <option value={x.value} key={x.id}>
-                  {x.option}
-                </option>
-              ))}
-            </select>
-            <input type="submit" value="Submit" />
-          </form>
+          {!menuTwo ? null
+            : (
+              <form onSubmit={this.handleSubmitFull}>
+              Pick a breed:
+                <select value={value} onChange={this.handleBreed}>
+                  {breedList.map(x => (
+                    <option value={x.$t} key={x.$t}>
+                      {x.$t}
+                    </option>
+                  ))}
+                </select>
+                Pick a gender:
+                <select value={value} onChange={this.handleGender}>
+                  <option value="M">
+                    Male
+                  </option>
+                  <option value="F">
+                    Female
+                  </option>
+                </select>
+                Pick an age:
+                <select value={value} onChange={this.handleAge}>
+                  {animalAge.map(x => (
+                    <option value={x.value} key={x.id}>
+                      {x.option}
+                    </option>
+                  ))}
+                </select>
+                Pick a size:
+                <select value={value} onChange={this.handleSize}>
+                  {animalSize.map(x => (
+                    <option value={x.value} key={x.id}>
+                      {x.option}
+                    </option>
+                  ))}
+                </select>
+                <input type="submit" value="Submit" />
+              </form>
+            )}
         </div>
 
         <div>
@@ -182,7 +192,7 @@ class Dashboard extends Component {
         </div>
 
         <div>
-          {currentAnimal.length === 0 ? '' : <SingleAnimal singleAnimalDisplay={currentAnimal} />}
+          {currentAnimal.length === 0 ? null : <SingleAnimal singleAnimalDisplay={currentAnimal} />}
         </div>
 
       </div>
