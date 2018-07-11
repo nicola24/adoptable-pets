@@ -5,8 +5,22 @@ import DisplayAnimal from './DisplayAnimal';
 
 const ListAnimals = ({ listOfAnimals, animalClickHandler }) => (
   <div>
-    {listOfAnimals.map(x => (
-      <DisplayAnimal singleAnimal={x} key={x.id.$t} animalClickHandler={animalClickHandler} />))}
+    <div>
+      {listOfAnimals.length === 0 ? null
+        : (
+          <p>
+            {`Number of Result: ${listOfAnimals.length}`}
+          </p>
+        )}
+    </div>
+    <div>
+      {listOfAnimals.map(x => (
+        <DisplayAnimal
+          singleAnimal={x}
+          key={x.id.$t}
+          animalClickHandler={animalClickHandler}
+        />))}
+    </div>
   </div>
 );
 
