@@ -10,8 +10,8 @@ const port = process.env.PORT || 3000;
 app.use(express.static('dist'));
 
 // return a list of animals filtered by animal type and zipcode location
-app.get('/petbasicfind/:animal/:zipcode/:offset', (req, res) => {
-  const { animal, zipcode, offset } = req.params;
+app.get('/petbasicfind/:animal/:zipcode/:count', (req, res) => {
+  const { animal, zipcode, count } = req.params;
 
   const options = {
     url: [
@@ -19,7 +19,7 @@ app.get('/petbasicfind/:animal/:zipcode/:offset', (req, res) => {
       `key=${apiKey}`,
       `animal=${animal}`,
       `location=${zipcode}`,
-      `offset=${offset}`,
+      `count=${count}`,
     ].join('&'),
   };
 
@@ -42,7 +42,7 @@ app.get('/breedlist/:animal', (req, res) => {
 });
 
 // return a list of animals filtered by animal type, zipcode, breed, gender, size, age
-app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:offset', (req, res) => {
+app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:count', (req, res) => {
   const {
     animal,
     zipcode,
@@ -50,7 +50,7 @@ app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:offset', (req, re
     sex,
     age,
     size,
-    offset,
+    count,
   } = req.params;
 
   const options = {
@@ -63,7 +63,7 @@ app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:offset', (req, re
       `sex=${sex}`,
       `age=${age}`,
       `size=${size}`,
-      `offset=${offset}`,
+      `count=${count}`,
     ].join('&'),
   };
 

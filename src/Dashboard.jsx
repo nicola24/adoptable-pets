@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import ListAnimals from './ListAnimals';
 import SingleAnimal from './SingleAnimal';
-import { typeOfAnimal, animalAge, animalSize } from './data/dropdownOptions';
+import {
+  typeOfAnimal, animalAge, animalSize, moreResults,
+} from './data/dropdownOptions';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -17,8 +19,7 @@ class Dashboard extends Component {
       age: 'Baby',
       size: 'S',
       currentAnimal: [],
-      offset: 0,
-      menuTwo: false,
+      count: 25,
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -28,6 +29,7 @@ class Dashboard extends Component {
     this.handleGender = this.handleGender.bind(this);
     this.handleSize = this.handleSize.bind(this);
     this.handleAge = this.handleAge.bind(this);
+    this.handleCount = this.handleCount.bind(this);
     this.handleAnimalClick = this.handleAnimalClick.bind(this);
     this.fetchBreed = this.fetchBreed.bind(this);
   }
@@ -56,6 +58,10 @@ class Dashboard extends Component {
     this.setState({ age: e.target.value });
   }
 
+  handleCount(e) {
+    this.setState({ count: e.target.value });
+  }
+
   handleAnimalClick(id) {
     const { animals } = this.state;
 
@@ -63,14 +69,11 @@ class Dashboard extends Component {
   }
 
   handleSubmitBasic(e) {
-    const { zipcode, animal, offset } = this.state;
+    const { zipcode, animal, count } = this.state;
 
-    fetch(`/petbasicfind/${animal}/${zipcode}/${offset}`)
+    fetch(`/petbasicfind/${animal}/${zipcode}/${count}`)
       .then(res => res.json())
-      .then(data => this.setState({
-        animals: data.petfinder.pets.pet,
-        menuTwo: true,
-      }, this.fetchBreed()))
+      .then(data => this.setState({ animals: data.petfinder.pets.pet }, this.fetchBreed()))
       .catch(() => alert('Please enter a Valid Zip Code'));
 
     e.preventDefault();
@@ -95,10 +98,10 @@ class Dashboard extends Component {
       age,
       gender,
       size,
-      offset,
+      count,
     } = this.state;
 
-    fetch(`/petfullfind/${animal}/${zipcode}/${breed}/${gender}/${age}/${size}/${offset}`)
+    fetch(`/petfullfind/${animal}/${zipcode}/${breed}/${gender}/${age}/${size}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }));
 
@@ -111,12 +114,13 @@ class Dashboard extends Component {
       animals,
       breedList,
       currentAnimal,
-      menuTwo,
     } = this.state;
 
     return (
       <div>
-        {/* first form */}
+        <h2>
+          Basic Search
+        </h2>
         <div>
           <form onSubmit={this.handleSubmitBasic}>
             Pick a zipcode:
@@ -135,50 +139,81 @@ class Dashboard extends Component {
                 </option>
               ))}
             </select>
-            {menuTwo ? null : <input type="submit" value="Submit" />}
+            Number of Results:
+            <select value={value} onChange={this.handleCount}>
+              {moreResults.map(x => (
+                <option value={x.value} key={x.value}>
+                  {x.value}
+                </option>
+              ))}
+            </select>
+            <input type="submit" value="Submit" />
           </form>
         </div>
-        {/* Second form */}
+        <h2>
+          More Search Options
+        </h2>
         <div>
-          {!menuTwo ? null
-            : (
-              <form onSubmit={this.handleSubmitFull}>
-              Pick a breed:
-                <select value={value} onChange={this.handleBreed}>
-                  {breedList.map(x => (
-                    <option value={x.$t} key={x.$t}>
-                      {x.$t}
-                    </option>
-                  ))}
-                </select>
-                Pick a gender:
-                <select value={value} onChange={this.handleGender}>
-                  <option value="M">
-                    Male
-                  </option>
-                  <option value="F">
-                    Female
-                  </option>
-                </select>
-                Pick an age:
-                <select value={value} onChange={this.handleAge}>
-                  {animalAge.map(x => (
-                    <option value={x.value} key={x.id}>
-                      {x.option}
-                    </option>
-                  ))}
-                </select>
-                Pick a size:
-                <select value={value} onChange={this.handleSize}>
-                  {animalSize.map(x => (
-                    <option value={x.value} key={x.id}>
-                      {x.option}
-                    </option>
-                  ))}
-                </select>
-                <input type="submit" value="Submit" />
-              </form>
-            )}
+          <form onSubmit={this.handleSubmitFull}>
+            Pick a zipcode:
+            <input
+              placeholder="Zip Code"
+              type="number"
+              value={value}
+              onChange={this.handleZipcode}
+              required
+            />
+            Pick an animal:
+            <select value={value} onChange={this.handleAnimal}>
+              {typeOfAnimal.map(x => (
+                <option value={x.value} key={x.id}>
+                  {x.option}
+                </option>
+              ))}
+            </select>
+          Pick a breed:
+            <select value={value} onChange={this.handleBreed}>
+              {breedList.map(x => (
+                <option value={x.$t} key={x.$t}>
+                  {x.$t}
+                </option>
+              ))}
+            </select>
+            Pick a gender:
+            <select value={value} onChange={this.handleGender}>
+              <option value="M">
+                Male
+              </option>
+              <option value="F">
+                Female
+              </option>
+            </select>
+            Pick an age:
+            <select value={value} onChange={this.handleAge}>
+              {animalAge.map(x => (
+                <option value={x.value} key={x.id}>
+                  {x.option}
+                </option>
+              ))}
+            </select>
+            Pick a size:
+            <select value={value} onChange={this.handleSize}>
+              {animalSize.map(x => (
+                <option value={x.value} key={x.id}>
+                  {x.option}
+                </option>
+              ))}
+            </select>
+            Number of Results:
+            <select value={value} onChange={this.handleCount}>
+              {moreResults.map(x => (
+                <option value={x.value} key={x.value}>
+                  {x.value}
+                </option>
+              ))}
+            </select>
+            <input type="submit" value="Submit" />
+          </form>
         </div>
 
         <div>
