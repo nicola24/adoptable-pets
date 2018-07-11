@@ -10,7 +10,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      zipcode: '',
+      zipCode: '',
       animal: 'dog',
       animals: [],
       breedList: [],
@@ -35,7 +35,7 @@ class Dashboard extends Component {
   }
 
   handleZipcode(e) {
-    this.setState({ zipcode: e.target.value });
+    this.setState({ zipCode: e.target.value });
   }
 
   handleAnimal(e) {
@@ -69,9 +69,9 @@ class Dashboard extends Component {
   }
 
   handleSubmitBasic(e) {
-    const { zipcode, animal, count } = this.state;
+    const { zipCode, animal, count } = this.state;
 
-    fetch(`/petbasicfind/${animal}/${zipcode}/${count}`)
+    fetch(`/petbasicfind/${animal}/${zipCode}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }, this.fetchBreed()))
       .catch(() => alert('Please enter a Valid Zip Code'));
@@ -92,7 +92,7 @@ class Dashboard extends Component {
 
   handleSubmitFull(e) {
     const {
-      zipcode,
+      zipCode,
       animal,
       breed,
       age,
@@ -101,9 +101,10 @@ class Dashboard extends Component {
       count,
     } = this.state;
 
-    fetch(`/petfullfind/${animal}/${zipcode}/${breed}/${gender}/${age}/${size}/${count}`)
+    fetch(`/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
       .then(res => res.json())
-      .then(data => this.setState({ animals: data.petfinder.pets.pet }));
+      .then(data => this.setState({ animals: data.petfinder.pets.pet }))
+      .catch(() => alert('Please enter a Valid Zip Code'));
 
     e.preventDefault();
   }
@@ -118,12 +119,10 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <h2>
-          Basic Search
-        </h2>
+
         <div>
           <form onSubmit={this.handleSubmitBasic}>
-            Pick a zipcode:
+            Pick a ZipCode:
             <input
               placeholder="Zip Code"
               type="number"
@@ -150,27 +149,9 @@ class Dashboard extends Component {
             <input type="submit" value="Submit" />
           </form>
         </div>
-        <h2>
-          More Search Options
-        </h2>
+
         <div>
           <form onSubmit={this.handleSubmitFull}>
-            Pick a zipcode:
-            <input
-              placeholder="Zip Code"
-              type="number"
-              value={value}
-              onChange={this.handleZipcode}
-              required
-            />
-            Pick an animal:
-            <select value={value} onChange={this.handleAnimal}>
-              {typeOfAnimal.map(x => (
-                <option value={x.value} key={x.id}>
-                  {x.option}
-                </option>
-              ))}
-            </select>
           Pick a breed:
             <select value={value} onChange={this.handleBreed}>
               {breedList.map(x => (
@@ -212,7 +193,7 @@ class Dashboard extends Component {
                 </option>
               ))}
             </select>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Update" />
           </form>
         </div>
 

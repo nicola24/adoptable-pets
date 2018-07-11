@@ -27,6 +27,10 @@ const moreResults = [
   { id: 2, value: '50' },
   { id: 3, value: '75' },
   { id: 4, value: '100' },
+  { id: 5, value: '125' },
+  { id: 6, value: '150' },
+  { id: 7, value: '175' },
+  { id: 8, value: '200' },
 ];
 
 export {
