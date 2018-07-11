@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 
 import ListAnimals from './ListAnimals';
 import SingleAnimal from './SingleAnimal';
-import {
-  typeOfAnimal, animalAge, animalSize, moreResults,
-} from './data/dropdownOptions';
+import FormOne from './FormOne';
+import FormTwo from './FormTwo';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -104,99 +103,54 @@ class Dashboard extends Component {
     fetch(`/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }))
-      .catch(() => alert('Please enter a Valid Zip Code'));
+      .catch(() => alert('Please select an animal'));
 
     e.preventDefault();
   }
 
   render() {
     const {
-      value,
       animals,
       breedList,
       currentAnimal,
+      zipCode,
+      animal,
+      count,
+      breed,
+      size,
+      age,
+      gender,
     } = this.state;
 
     return (
       <div>
-
         <div>
-          <form onSubmit={this.handleSubmitBasic}>
-            Pick a ZipCode:
-            <input
-              placeholder="Zip Code"
-              type="number"
-              value={value}
-              onChange={this.handleZipcode}
-              required
-            />
-            Pick an animal:
-            <select value={value} onChange={this.handleAnimal}>
-              {typeOfAnimal.map(x => (
-                <option value={x.value} key={x.id}>
-                  {x.option}
-                </option>
-              ))}
-            </select>
-            Number of Results:
-            <select value={value} onChange={this.handleCount}>
-              {moreResults.map(x => (
-                <option value={x.value} key={x.value}>
-                  {x.value}
-                </option>
-              ))}
-            </select>
-            <input type="submit" value="Submit" />
-          </form>
+          <FormOne
+            onFormSubmit={this.handleSubmitBasic}
+            onChangeZipcode={this.handleZipcode}
+            onChangeAnimal={this.handleAnimal}
+            onChangeCount={this.handleCount}
+            stateZipCode={zipCode}
+            stateAnimal={animal}
+            stateCount={count}
+          />
         </div>
-
         <div>
-          <form onSubmit={this.handleSubmitFull}>
-          Pick a breed:
-            <select value={value} onChange={this.handleBreed}>
-              {breedList.map(x => (
-                <option value={x.$t} key={x.$t}>
-                  {x.$t}
-                </option>
-              ))}
-            </select>
-            Pick a gender:
-            <select value={value} onChange={this.handleGender}>
-              <option value="M">
-                Male
-              </option>
-              <option value="F">
-                Female
-              </option>
-            </select>
-            Pick an age:
-            <select value={value} onChange={this.handleAge}>
-              {animalAge.map(x => (
-                <option value={x.value} key={x.id}>
-                  {x.option}
-                </option>
-              ))}
-            </select>
-            Pick a size:
-            <select value={value} onChange={this.handleSize}>
-              {animalSize.map(x => (
-                <option value={x.value} key={x.id}>
-                  {x.option}
-                </option>
-              ))}
-            </select>
-            Number of Results:
-            <select value={value} onChange={this.handleCount}>
-              {moreResults.map(x => (
-                <option value={x.value} key={x.value}>
-                  {x.value}
-                </option>
-              ))}
-            </select>
-            <input type="submit" value="Update" />
-          </form>
+          <FormTwo
+            onFormFullSubmit={this.handleSubmitFull}
+            onChangeBreed={this.handleBreed}
+            onChangeGender={this.handleBreed}
+            onChangeAge={this.handleAge}
+            onChangeSize={this.handleSize}
+            onChangeCount={this.handleCount}
+            stateBreedList={breedList}
+            stateBreed={breed}
+            stateGender={gender}
+            stateAge={age}
+            stateSize={size}
+            stateCount={count}
+          />
         </div>
-
         <div>
           {animals === undefined ? 'No Result'
             : (
@@ -206,11 +160,9 @@ class Dashboard extends Component {
               />
             )}
         </div>
-
         <div>
           {currentAnimal.length === 0 ? null : <SingleAnimal singleAnimalDisplay={currentAnimal} />}
         </div>
-
       </div>
     );
   }
