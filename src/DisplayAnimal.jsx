@@ -7,6 +7,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 
+const styles = {
+  avatar: {
+    width: 80,
+    height: 80,
+  },
+};
+
 const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
   const filterImgList = singleAnimal.media.photos
     ? singleAnimal.media.photos.photo.filter(x => x['@size'] === 'fpm')[0].$t
@@ -24,8 +31,8 @@ const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
       tabIndex={0}
     >
       <List>
-        <ListItem button>
-          <Avatar alt="" src={filterImgList} />
+        <ListItem button dense>
+          <Avatar alt="" src={filterImgList} style={styles.avatar} />
           <ListItemText primary={singleAnimal.name.$t} />
           <ListItemText primary={singleAnimal.contact.city.$t} />
           <ListItemText primary={singleAnimal.age.$t} />

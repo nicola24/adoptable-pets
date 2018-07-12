@@ -16,7 +16,7 @@ const FormTwo = ({
 }) => (
   <div>
     <form onSubmit={onFormFullSubmit}>
-      <FormControl>
+      <FormControl fullWidth>
         <select value={stateBreed} onChange={onChangeBreed}>
           {stateBreedList.map(x => (
             <option value={x.$t} key={x.$t}>

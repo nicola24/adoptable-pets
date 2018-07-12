@@ -3,26 +3,33 @@ import PropTypes from 'prop-types';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ContactMail from '@material-ui/icons/ContactMail';
+import Pets from '@material-ui/icons/Pets';
+import LocationOn from '@material-ui/icons/LocationOn';
+import Mail from '@material-ui/icons/Mail';
+import Phone from '@material-ui/icons/Phone';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+
 const styles = {
-  card: {
-    maxWidth: 345,
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+  gridList: {
+    height: 500,
   },
 };
 
 const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) => {
   const filterImgList = singleAnimalDisplay[0].media.photos
-    ? singleAnimalDisplay[0].media.photos.photo.filter(x => x['@size'] === 'x')[0].$t
+    ? singleAnimalDisplay[0].media.photos.photo.filter(x => x['@size'] === 'pn')
     : 'https://i.imgur.com/9qsrEyw.jpg';
 
   const breedList = Array.isArray(singleAnimalDisplay[0].breeds.breed)
@@ -37,46 +44,75 @@ const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) 
                       ${singleAnimalDisplay[0].contact.state.$t}
                       ${singleAnimalDisplay[0].contact.zip.$t}`;
 
+  const gender = singleAnimalDisplay[0].sex.$t === 'M' ? 'Male' : 'Female';
+
+  const size = () => {
+    let result = '';
+    if (singleAnimalDisplay[0].size.$t === 'S') result = 'Small';
+    if (singleAnimalDisplay[0].size.$t === 'M') result = 'Medium';
+    if (singleAnimalDisplay[0].size.$t === 'L') result = 'Large';
+    if (singleAnimalDisplay[0].size.$t === 'XL') result = 'Extra-large';
+    return result;
+  };
+
   return (
     <div>
       <Card>
-        <img src={filterImgList} alt="" />
+        <div style={styles.root}>
+          <GridList cellHeight="auto" style={styles.gridList} cols={2}>
+            {filterImgList.map(tile => (
+              <GridListTile key={tile['@id']} cols={1}>
+                <img src={tile.$t} alt="" />
+              </GridListTile>
+            ))}
+          </GridList>
+        </div>
         <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-            {singleAnimalDisplay[0].name.$t}
+          <Typography gutterBottom variant="display1" component="h2" color="primary">
+            <Pets />
+            {` Meet ${singleAnimalDisplay[0].name.$t}`}
           </Typography>
-          <Typography variant="subheading">
-            {breedList}
+          <Typography paragraph variant="subheading">
+            {`${breedList} • ${singleAnimalDisplay[0].contact.city.$t}, ${singleAnimalDisplay[0].contact.state.$t}`}
+          </Typography>
+          <Typography paragraph variant="subheading">
+            {`${singleAnimalDisplay[0].age.$t} • ${gender} • ${size()}`}
+          </Typography>
+          <Typography paragraph variant="headline" color="primary">
+            Health
           </Typography>
           <Typography paragraph variant="subheading">
             {animalOptions}
           </Typography>
-          <Typography paragraph component="p">
+          <Typography paragraph variant="headline" color="primary">
+            About
+          </Typography>
+          <Typography paragraph component="p" align="justify">
             {singleAnimalDisplay[0].description.$t}
           </Typography>
         </CardContent>
-        <IconButton onClick={onChangeExpanded}>
-          <ExpandMoreIcon />
-        </IconButton>
+        <Typography variant="headline" color="primary">
+          <IconButton onClick={onChangeExpanded}>
+            <ExpandMoreIcon />
+          </IconButton>
+          Contact Information
+        </Typography>
         <Collapse in={stateExpanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph variant="subheading">
-              <ContactMail />
-              Address:
-            </Typography>
-            <Typography>
+            <Typography variant="subheading">
+              <LocationOn />
               {singleAnimalDisplay[0].contact.address1.$t}
             </Typography>
-            <Typography paragraph>
+            <Typography paragraph variant="subheading">
               {fullAdress}
             </Typography>
-            <Typography paragraph>
+            <Typography paragraph variant="subheading">
+              <Phone />
               {singleAnimalDisplay[0].contact.phone.$t}
             </Typography>
-            <Typography paragraph>
-              <a href={`mailto:${singleAnimalDisplay[0].contact.email.$t}`}>
-                {singleAnimalDisplay[0].contact.email.$t}
-              </a>
+            <Typography paragraph variant="subheading">
+              <Mail />
+              {singleAnimalDisplay[0].contact.email.$t}
             </Typography>
           </CardContent>
         </Collapse>
