@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import Avatar from '@material-ui/core/Avatar';
+
 const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
   const filterImgList = singleAnimal.media.photos
     ? singleAnimal.media.photos.photo.filter(x => x['@size'] === 'fpm')[0].$t
@@ -17,22 +23,17 @@ const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
       role="button"
       tabIndex={0}
     >
-      <img src={filterImgList} alt="" />
-      <p>
-        {singleAnimal.name.$t}
-      </p>
-      <p>
-        {singleAnimal.contact.city.$t}
-      </p>
-      <p>
-        {singleAnimal.age.$t}
-      </p>
-      <p>
-        {singleAnimal.sex.$t === 'M' ? 'Male' : 'Female'}
-      </p>
-      <p>
-        {breedList}
-      </p>
+      <List>
+        <ListItem button>
+          <Avatar alt="" src={filterImgList} />
+          <ListItemText primary={singleAnimal.name.$t} />
+          <ListItemText primary={singleAnimal.contact.city.$t} />
+          <ListItemText primary={singleAnimal.age.$t} />
+          <ListItemText primary={singleAnimal.sex.$t === 'M' ? 'Male' : 'Female'} />
+          <ListItemText primary={breedList} />
+        </ListItem>
+      </List>
+      <Divider />
     </div>
   );
 };

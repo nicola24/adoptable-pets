@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
 import ListAnimals from './ListAnimals';
 import SingleAnimal from './SingleAnimal';
 import FormOne from './FormOne';
@@ -18,7 +21,9 @@ class Dashboard extends Component {
       age: 'Baby',
       size: 'S',
       currentAnimal: [],
-      count: 25,
+      count: '25',
+      wrongZipcode: false,
+      expanded: false,
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -31,6 +36,7 @@ class Dashboard extends Component {
     this.handleCount = this.handleCount.bind(this);
     this.handleAnimalClick = this.handleAnimalClick.bind(this);
     this.fetchBreed = this.fetchBreed.bind(this);
+    this.handleExpandClick = this.handleExpandClick.bind(this);
   }
 
   handleZipcode(e) {
@@ -67,13 +73,20 @@ class Dashboard extends Component {
     this.setState({ currentAnimal: animals.filter(x => x.id.$t === id) });
   }
 
+  handleExpandClick() {
+    this.setState(state => ({ expanded: !state.expanded }));
+  }
+
   handleSubmitBasic(e) {
     const { zipCode, animal, count } = this.state;
 
     fetch(`/petbasicfind/${animal}/${zipCode}/${count}`)
       .then(res => res.json())
-      .then(data => this.setState({ animals: data.petfinder.pets.pet }, this.fetchBreed()))
-      .catch(() => alert('Please enter a Valid Zip Code'));
+      .then(data => this.setState({
+        animals: data.petfinder.pets.pet,
+        wrongZipcode: false,
+      }, this.fetchBreed()))
+      .catch(() => this.setState({ wrongZipcode: true }));
 
     e.preventDefault();
   }
@@ -120,49 +133,67 @@ class Dashboard extends Component {
       size,
       age,
       gender,
+      wrongZipcode,
+      expanded,
     } = this.state;
 
     return (
       <div>
-        <div>
-          <FormOne
-            onFormSubmit={this.handleSubmitBasic}
-            onChangeZipcode={this.handleZipcode}
-            onChangeAnimal={this.handleAnimal}
-            onChangeCount={this.handleCount}
-            stateZipCode={zipCode}
-            stateAnimal={animal}
-            stateCount={count}
-          />
-        </div>
-        <div>
-          <FormTwo
-            onFormFullSubmit={this.handleSubmitFull}
-            onChangeBreed={this.handleBreed}
-            onChangeGender={this.handleBreed}
-            onChangeAge={this.handleAge}
-            onChangeSize={this.handleSize}
-            onChangeCount={this.handleCount}
-            stateBreedList={breedList}
-            stateBreed={breed}
-            stateGender={gender}
-            stateAge={age}
-            stateSize={size}
-            stateCount={count}
-          />
-        </div>
-        <div>
-          {animals === undefined ? 'No Result'
-            : (
-              <ListAnimals
-                listOfAnimals={animals}
-                animalClickHandler={this.handleAnimalClick}
+        <Grid container>
+
+          <Grid item xs>
+            <div>
+              <FormOne
+                onFormSubmit={this.handleSubmitBasic}
+                onChangeZipcode={this.handleZipcode}
+                onChangeAnimal={this.handleAnimal}
+                onChangeCount={this.handleCount}
+                stateZipCode={zipCode}
+                stateAnimal={animal}
+                stateCount={count}
+                stateWrongZipCode={wrongZipcode}
               />
-            )}
-        </div>
-        <div>
-          {currentAnimal.length === 0 ? null : <SingleAnimal singleAnimalDisplay={currentAnimal} />}
-        </div>
+            </div>
+            <div>
+              <FormTwo
+                onFormFullSubmit={this.handleSubmitFull}
+                onChangeBreed={this.handleBreed}
+                onChangeGender={this.handleBreed}
+                onChangeAge={this.handleAge}
+                onChangeSize={this.handleSize}
+                onChangeCount={this.handleCount}
+                stateBreedList={breedList}
+                stateBreed={breed}
+                stateGender={gender}
+                stateAge={age}
+                stateSize={size}
+                stateCount={count}
+              />
+            </div>
+          </Grid>
+
+          <Grid item xs>
+            {animals === undefined ? 'No Result'
+              : (
+                <ListAnimals
+                  listOfAnimals={animals}
+                  animalClickHandler={this.handleAnimalClick}
+                />
+              )}
+          </Grid>
+
+          <Grid item xs>
+            {currentAnimal.length === 0 ? null
+              : (
+                <SingleAnimal
+                  singleAnimalDisplay={currentAnimal}
+                  stateExpanded={expanded}
+                  onChangeExpanded={this.handleExpandClick}
+                />
+              )}
+          </Grid>
+
+        </Grid>
       </div>
     );
   }

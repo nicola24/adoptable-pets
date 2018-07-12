@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  animalAge, animalSize, moreResults,
-} from './data/dropdownOptions';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+
+import { animalAge, animalSize, moreResults } from './data/dropdownOptions';
 
 const FormTwo = ({
   onFormFullSubmit, onChangeBreed, onChangeGender, onChangeAge,
@@ -12,48 +16,62 @@ const FormTwo = ({
 }) => (
   <div>
     <form onSubmit={onFormFullSubmit}>
-    Pick a breed:
-      <select value={stateBreed} onChange={onChangeBreed}>
-        {stateBreedList.map(x => (
-          <option value={x.$t} key={x.$t}>
-            {x.$t}
-          </option>
-        ))}
-      </select>
-      Pick a gender:
-      <select value={stateGender} onChange={onChangeGender}>
-        <option value="M">
-          Male
-        </option>
-        <option value="F">
-          Female
-        </option>
-      </select>
-      Pick an age:
-      <select value={stateAge} onChange={onChangeAge}>
-        {animalAge.map(x => (
-          <option value={x.htmlValue} key={x.id}>
-            {x.option}
-          </option>
-        ))}
-      </select>
-      Pick a size:
-      <select value={stateSize} onChange={onChangeSize}>
-        {animalSize.map(x => (
-          <option value={x.htmlValue} key={x.id}>
-            {x.option}
-          </option>
-        ))}
-      </select>
-      Number of Results:
-      <select value={stateCount} onChange={onChangeCount}>
-        {moreResults.map(x => (
-          <option value={x.htmlValue} key={x.htmlValue}>
-            {x.htmlValue}
-          </option>
-        ))}
-      </select>
-      <input type="submit" value="Update" />
+      <FormControl>
+        <select value={stateBreed} onChange={onChangeBreed}>
+          {stateBreedList.map(x => (
+            <option value={x.$t} key={x.$t}>
+              {x.$t}
+            </option>
+          ))}
+        </select>
+        <FormHelperText>
+          Pick a breed
+        </FormHelperText>
+        <Select value={stateGender} onChange={onChangeGender}>
+          <MenuItem value="M">
+            Male
+          </MenuItem>
+          <MenuItem value="F">
+            Female
+          </MenuItem>
+        </Select>
+        <FormHelperText>
+          Pick a gender
+        </FormHelperText>
+        <Select value={stateAge} onChange={onChangeAge}>
+          {animalAge.map(x => (
+            <MenuItem value={x.htmlValue} key={x.id}>
+              {x.option}
+            </MenuItem>
+          ))}
+        </Select>
+        <FormHelperText>
+          Pick an age
+        </FormHelperText>
+        <Select value={stateSize} onChange={onChangeSize}>
+          {animalSize.map(x => (
+            <MenuItem value={x.htmlValue} key={x.id}>
+              {x.option}
+            </MenuItem>
+          ))}
+        </Select>
+        <FormHelperText>
+          Pick a size
+        </FormHelperText>
+        <Select value={stateCount} onChange={onChangeCount}>
+          {moreResults.map(x => (
+            <MenuItem value={x.htmlValue} key={x.htmlValue}>
+              {x.htmlValue}
+            </MenuItem>
+          ))}
+        </Select>
+        <FormHelperText>
+          Number of Results
+        </FormHelperText>
+        <Button variant="contained" type="submit">
+          Update
+        </Button>
+      </FormControl>
     </form>
   </div>
 );
@@ -70,7 +88,7 @@ FormTwo.propTypes = {
   stateGender: PropTypes.string.isRequired,
   stateAge: PropTypes.string.isRequired,
   stateSize: PropTypes.string.isRequired,
-  stateCount: PropTypes.number.isRequired,
+  stateCount: PropTypes.string.isRequired,
 };
 
 export default FormTwo;

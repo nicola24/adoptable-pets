@@ -1,7 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SingleAnimal = ({ singleAnimalDisplay }) => {
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ContactMail from '@material-ui/icons/ContactMail';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+
+const styles = {
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+};
+
+const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) => {
   const filterImgList = singleAnimalDisplay[0].media.photos
     ? singleAnimalDisplay[0].media.photos.photo.filter(x => x['@size'] === 'x')[0].$t
     : 'https://i.imgur.com/9qsrEyw.jpg';
@@ -20,43 +39,56 @@ const SingleAnimal = ({ singleAnimalDisplay }) => {
 
   return (
     <div>
-      <img src={filterImgList} alt="" />
-      <h3>
-        {singleAnimalDisplay[0].name.$t}
-      </h3>
-      <h3>
-        {singleAnimalDisplay[0].age.$t}
-      </h3>
-      <h3>
-        {singleAnimalDisplay[0].sex.$t === 'M' ? 'Male' : 'Female'}
-      </h3>
-      <h3>
-        {breedList}
-      </h3>
-      <h3>
-        {animalOptions}
-      </h3>
-      <h4>
-        {singleAnimalDisplay[0].description.$t}
-      </h4>
-      <h4>
-        {singleAnimalDisplay[0].contact.address1.$t}
-      </h4>
-      <h4>
-        {fullAdress}
-      </h4>
-      <h4>
-        {singleAnimalDisplay[0].contact.phone.$t}
-      </h4>
-      <a href={`mailto:${singleAnimalDisplay[0].contact.email.$t}`}>
-        {singleAnimalDisplay[0].contact.email.$t}
-      </a>
+      <Card>
+        <img src={filterImgList} alt="" />
+        <CardContent>
+          <Typography gutterBottom variant="headline" component="h2">
+            {singleAnimalDisplay[0].name.$t}
+          </Typography>
+          <Typography variant="subheading">
+            {breedList}
+          </Typography>
+          <Typography paragraph variant="subheading">
+            {animalOptions}
+          </Typography>
+          <Typography paragraph component="p">
+            {singleAnimalDisplay[0].description.$t}
+          </Typography>
+        </CardContent>
+        <IconButton onClick={onChangeExpanded}>
+          <ExpandMoreIcon />
+        </IconButton>
+        <Collapse in={stateExpanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph variant="subheading">
+              <ContactMail />
+              Address:
+            </Typography>
+            <Typography>
+              {singleAnimalDisplay[0].contact.address1.$t}
+            </Typography>
+            <Typography paragraph>
+              {fullAdress}
+            </Typography>
+            <Typography paragraph>
+              {singleAnimalDisplay[0].contact.phone.$t}
+            </Typography>
+            <Typography paragraph>
+              <a href={`mailto:${singleAnimalDisplay[0].contact.email.$t}`}>
+                {singleAnimalDisplay[0].contact.email.$t}
+              </a>
+            </Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
     </div>
   );
 };
 
 SingleAnimal.propTypes = {
   singleAnimalDisplay: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChangeExpanded: PropTypes.func.isRequired,
+  stateExpanded: PropTypes.bool.isRequired,
 };
 
 export default SingleAnimal;
