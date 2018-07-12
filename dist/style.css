@@ -7,14 +7,10 @@ body {
   background-color: #efeef1;
 }
 
-a {
-  text-decoration: none;
-}
-
 section {
   padding-top: 80px;
 }
 
 section #formTwo {
-  padding-top: 50px;
+  padding-top: 15px;
 }

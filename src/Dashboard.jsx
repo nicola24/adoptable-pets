@@ -24,6 +24,7 @@ class Dashboard extends Component {
       count: '25',
       wrongZipcode: false,
       expanded: false,
+      expandedForm: false,
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -37,6 +38,7 @@ class Dashboard extends Component {
     this.handleAnimalClick = this.handleAnimalClick.bind(this);
     this.fetchBreed = this.fetchBreed.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
+    this.handleExpandClickForm = this.handleExpandClickForm.bind(this);
   }
 
   handleZipcode(e) {
@@ -75,6 +77,10 @@ class Dashboard extends Component {
 
   handleExpandClick() {
     this.setState(state => ({ expanded: !state.expanded }));
+  }
+
+  handleExpandClickForm() {
+    this.setState(state => ({ expandedForm: !state.expandedForm }));
   }
 
   handleSubmitBasic(e) {
@@ -135,6 +141,7 @@ class Dashboard extends Component {
       gender,
       wrongZipcode,
       expanded,
+      expandedForm,
     } = this.state;
 
     return (
@@ -167,6 +174,8 @@ class Dashboard extends Component {
                   stateAge={age}
                   stateSize={size}
                   stateCount={count}
+                  stateExpandedForm={expandedForm}
+                  onChangeExpandedForm={this.handleExpandClickForm}
                 />
               </div>
             </Grid>

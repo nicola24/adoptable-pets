@@ -11,7 +11,7 @@ import Mail from '@material-ui/icons/Mail';
 import Phone from '@material-ui/icons/Phone';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
-
+import Avatar from '@material-ui/core/Avatar';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
@@ -25,12 +25,37 @@ const styles = {
   gridList: {
     height: 500,
   },
+  avatar: {
+    width: 200,
+    height: 200,
+    fontSize: 100,
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: 10,
+  },
 };
 
 const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) => {
   const filterImgList = singleAnimalDisplay[0].media.photos
-    ? singleAnimalDisplay[0].media.photos.photo.filter(x => x['@size'] === 'pn')
-    : 'https://i.imgur.com/9qsrEyw.jpg';
+    ? (
+      <div style={styles.root}>
+        <GridList cellHeight="auto" style={styles.gridList} cols={2}>
+          {singleAnimalDisplay[0].media.photos.photo.filter(x => x['@size'] === 'pn').map(tile => (
+            <GridListTile key={tile['@id']}>
+              <img src={tile.$t} alt="" />
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+    ) : (
+      <div style={styles.row}>
+        <Avatar style={styles.avatar}>
+          {singleAnimalDisplay[0].name.$t[0].toUpperCase()}
+        </Avatar>
+      </div>
+    );
 
   const breedList = Array.isArray(singleAnimalDisplay[0].breeds.breed)
     ? singleAnimalDisplay[0].breeds.breed.map(x => Object.values(x)).join(' & ')
@@ -58,15 +83,7 @@ const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) 
   return (
     <div>
       <Card>
-        <div style={styles.root}>
-          <GridList cellHeight="auto" style={styles.gridList} cols={2}>
-            {filterImgList.map(tile => (
-              <GridListTile key={tile['@id']} cols={1}>
-                <img src={tile.$t} alt="" />
-              </GridListTile>
-            ))}
-          </GridList>
-        </div>
+        {filterImgList}
         <CardContent>
           <Typography gutterBottom variant="display1" component="h2" color="primary">
             <Pets />
