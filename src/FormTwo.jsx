@@ -13,6 +13,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+
 import { animalAge, animalSize, moreResults } from './data/dropdownOptions';
 
 const FormTwo = ({
@@ -31,6 +36,7 @@ const FormTwo = ({
       <CardContent>
         <form onSubmit={onFormFullSubmit}>
           <FormControl fullWidth>
+
             <select value={stateBreed} onChange={onChangeBreed}>
               {stateBreedList.map(x => (
                 <option value={x.$t} key={x.$t}>
@@ -41,17 +47,18 @@ const FormTwo = ({
             <FormHelperText>
               Pick a breed
             </FormHelperText>
-            <Select value={stateGender} onChange={onChangeGender}>
-              <MenuItem value="M">
-                Male
-              </MenuItem>
-              <MenuItem value="F">
-                Female
-              </MenuItem>
-            </Select>
-            <FormHelperText>
-              Pick a gender
-            </FormHelperText>
+
+            <FormLabel component="legend">
+              Gender
+            </FormLabel>
+            <RadioGroup
+              value={stateGender}
+              onChange={onChangeGender}
+            >
+              <FormControlLabel value="M" control={<Radio color="primary" />} label="Male" />
+              <FormControlLabel value="F" control={<Radio color="primary" />} label="Female" />
+            </RadioGroup>
+
             <Select value={stateAge} onChange={onChangeAge}>
               {animalAge.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
@@ -62,6 +69,7 @@ const FormTwo = ({
             <FormHelperText>
               Pick an age
             </FormHelperText>
+
             <Select value={stateSize} onChange={onChangeSize}>
               {animalSize.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
@@ -72,6 +80,7 @@ const FormTwo = ({
             <FormHelperText>
               Pick a size
             </FormHelperText>
+
             <Select value={stateCount} onChange={onChangeCount}>
               {moreResults.map(x => (
                 <MenuItem value={x.htmlValue} key={x.htmlValue}>
@@ -82,9 +91,11 @@ const FormTwo = ({
             <FormHelperText>
               Number of Results
             </FormHelperText>
+
             <Button variant="contained" type="submit">
               Update
             </Button>
+
           </FormControl>
         </form>
       </CardContent>
@@ -110,3 +121,15 @@ FormTwo.propTypes = {
 };
 
 export default FormTwo;
+
+{/* <Select value={stateGender} onChange={onChangeGender}>
+  <MenuItem value="M">
+    Male
+  </MenuItem>
+  <MenuItem value="F">
+    Female
+  </MenuItem>
+</Select>
+<FormHelperText>
+  Pick a gender
+</FormHelperText> */}
