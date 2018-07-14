@@ -1,13 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import Avatar from '@material-ui/core/Avatar';
+
+const styles = {
+  avatar: {
+    width: 80,
+    height: 80,
+  },
+};
+
 const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
   const filterImgList = singleAnimal.media.photos
-    ? singleAnimal.media.photos.photo.filter(x => x['@size'] === 'fpm')[0].$t
-    : 'https://i.imgur.com/9qsrEyw.jpg';
+    ? <Avatar alt="" src={singleAnimal.media.photos.photo.filter(x => x['@size'] === 'fpm')[0].$t} style={styles.avatar} />
+    : (
+      <Avatar style={styles.avatar}>
+        {singleAnimal.name.$t[0].toUpperCase()}
+      </Avatar>
+    );
 
   const breedList = Array.isArray(singleAnimal.breeds.breed)
-    ? singleAnimal.breeds.breed.map(x => Object.values(x)).join(' & ')
+    ? `${singleAnimal.breeds.breed[0].$t} Mix`
     : singleAnimal.breeds.breed.$t;
 
   return (
@@ -17,22 +34,18 @@ const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
       role="button"
       tabIndex={0}
     >
-      <img src={filterImgList} alt="" />
-      <p>
-        {singleAnimal.name.$t}
-      </p>
-      <p>
-        {singleAnimal.contact.city.$t}
-      </p>
-      <p>
-        {singleAnimal.age.$t}
-      </p>
-      <p>
-        {singleAnimal.sex.$t === 'M' ? 'Male' : 'Female'}
-      </p>
-      <p>
-        {breedList}
-      </p>
+      <List className="animated flipInX">
+        <ListItem button dense>
+          {filterImgList}
+          <ListItemText
+            primary={singleAnimal.name.$t}
+            secondary={`${singleAnimal.sex.$t === 'M' ? 'Male' : 'Female'}, ${singleAnimal.age.$t}`}
+          />
+          <ListItemText primary={singleAnimal.contact.city.$t} />
+          <ListItemText primary={breedList} />
+        </ListItem>
+      </List>
+      <Divider />
     </div>
   );
 };
