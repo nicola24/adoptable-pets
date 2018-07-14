@@ -14,6 +14,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
   root: {
@@ -37,7 +38,10 @@ const styles = {
   },
 };
 
-const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) => {
+const SingleAnimal = ({
+  singleAnimalDisplay, stateExpanded, onChangeExpanded, onChangeExpandedAbout,
+  stateExpandedAbout, onChangeExpandedHealth, stateExpandedHealth,
+}) => {
   const filterImgList = singleAnimalDisplay[0].media.photos
     ? (
       <div style={styles.root}>
@@ -83,11 +87,19 @@ const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) 
   return (
     <div>
       <Card>
-        {filterImgList}
+        <CardContent>
+          {filterImgList}
+        </CardContent>
         <CardContent>
           <Typography gutterBottom variant="display1" component="h2" color="primary">
-            <Pets />
-            {` Meet ${singleAnimalDisplay[0].name.$t}`}
+            <Grid container spacing={16} alignItems="center">
+              <Grid item>
+                <Pets />
+              </Grid>
+              <Grid item>
+                {`Meet ${singleAnimalDisplay[0].name.$t}`}
+              </Grid>
+            </Grid>
           </Typography>
           <Typography paragraph variant="subheading">
             {`${breedList} • ${singleAnimalDisplay[0].contact.city.$t}, ${singleAnimalDisplay[0].contact.state.$t}`}
@@ -95,19 +107,34 @@ const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) 
           <Typography paragraph variant="subheading">
             {`${singleAnimalDisplay[0].age.$t} • ${gender} • ${size()}`}
           </Typography>
-          <Typography paragraph variant="headline" color="primary">
-            Health
-          </Typography>
-          <Typography paragraph variant="subheading">
-            {animalOptions}
-          </Typography>
-          <Typography paragraph variant="headline" color="primary">
-            About
-          </Typography>
-          <Typography paragraph component="p" align="justify">
-            {singleAnimalDisplay[0].description.$t}
-          </Typography>
         </CardContent>
+        <Typography variant="headline" color="primary">
+          <IconButton onClick={onChangeExpandedHealth}>
+            <ExpandMoreIcon />
+          </IconButton>
+          Health
+        </Typography>
+        <Collapse in={stateExpandedHealth} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph variant="subheading">
+              {animalOptions}
+            </Typography>
+          </CardContent>
+        </Collapse>
+        <Typography variant="headline" color="primary">
+          <IconButton onClick={onChangeExpandedAbout}>
+            <ExpandMoreIcon />
+          </IconButton>
+          About
+        </Typography>
+        <Collapse in={stateExpandedAbout} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph component="p" align="justify">
+              {singleAnimalDisplay[0].description.$t}
+            </Typography>
+          </CardContent>
+        </Collapse>
+
         <Typography variant="headline" color="primary">
           <IconButton onClick={onChangeExpanded}>
             <ExpandMoreIcon />
@@ -116,20 +143,37 @@ const SingleAnimal = ({ singleAnimalDisplay, stateExpanded, onChangeExpanded }) 
         </Typography>
         <Collapse in={stateExpanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="subheading">
-              <LocationOn />
-              {singleAnimalDisplay[0].contact.address1.$t}
+            <Typography paragraph variant="subheading">
+              <Grid container spacing={16} alignItems="center">
+                <Grid item>
+                  <LocationOn />
+                </Grid>
+                <Grid item>
+                  {singleAnimalDisplay[0].contact.address1.$t}
+                  <br />
+                  {fullAdress}
+                </Grid>
+              </Grid>
             </Typography>
             <Typography paragraph variant="subheading">
-              {fullAdress}
+              <Grid container spacing={16} alignItems="center">
+                <Grid item>
+                  <Phone />
+                </Grid>
+                <Grid item>
+                  {singleAnimalDisplay[0].contact.phone.$t}
+                </Grid>
+              </Grid>
             </Typography>
             <Typography paragraph variant="subheading">
-              <Phone />
-              {singleAnimalDisplay[0].contact.phone.$t}
-            </Typography>
-            <Typography paragraph variant="subheading">
-              <Mail />
-              {singleAnimalDisplay[0].contact.email.$t}
+              <Grid container spacing={16} alignItems="center">
+                <Grid item>
+                  <Mail />
+                </Grid>
+                <Grid item>
+                  {singleAnimalDisplay[0].contact.email.$t}
+                </Grid>
+              </Grid>
             </Typography>
           </CardContent>
         </Collapse>
@@ -142,6 +186,10 @@ SingleAnimal.propTypes = {
   singleAnimalDisplay: PropTypes.arrayOf(PropTypes.object).isRequired,
   onChangeExpanded: PropTypes.func.isRequired,
   stateExpanded: PropTypes.bool.isRequired,
+  onChangeExpandedAbout: PropTypes.func.isRequired,
+  stateExpandedAbout: PropTypes.bool.isRequired,
+  onChangeExpandedHealth: PropTypes.func.isRequired,
+  stateExpandedHealth: PropTypes.bool.isRequired,
 };
 
 export default SingleAnimal;

@@ -7,10 +7,10 @@ body {
   background-color: #efeef1;
 }
 
-section {
-  padding-top: 80px;
-}
-
-section #formTwo {
-  padding-top: 15px;
+select {
+  cursor: pointer;
+  font-size: 16px;
+  border: 0;
+  outline: 1px solid #CCC;
+  background-color: white;
 }

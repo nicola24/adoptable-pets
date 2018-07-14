@@ -12,6 +12,16 @@ import CardContent from '@material-ui/core/CardContent';
 
 import { typeOfAnimal, moreResults } from './data/dropdownOptions';
 
+const styles = {
+  select: {
+    paddingTop: 24,
+  },
+  button: {
+    paddingTop: 20,
+    textAlign: 'center',
+  },
+};
+
 const FormOne = ({
   onFormSubmit, onChangeZipcode, onChangeAnimal, onChangeCount,
   stateZipCode, stateAnimal, stateCount, stateWrongZipCode,
@@ -20,6 +30,7 @@ const FormOne = ({
     <CardContent>
       <form onSubmit={onFormSubmit}>
         <FormControl fullWidth>
+
           <TextField
             label="Pick a ZipCode"
             type="number"
@@ -34,7 +45,8 @@ const FormOne = ({
                 Please select a valid ZipCode
               </FormHelperText>
             )}
-          <Select value={stateAnimal} onChange={onChangeAnimal}>
+
+          <Select value={stateAnimal} onChange={onChangeAnimal} style={styles.select}>
             {typeOfAnimal.map(x => (
               <MenuItem value={x.htmlValue} key={x.id}>
                 {x.option}
@@ -44,7 +56,8 @@ const FormOne = ({
           <FormHelperText>
             Pick an animal
           </FormHelperText>
-          <Select value={stateCount} onChange={onChangeCount}>
+
+          <Select value={stateCount} onChange={onChangeCount} style={styles.select}>
             {moreResults.map(x => (
               <MenuItem value={x.htmlValue} key={x.htmlValue}>
                 {x.htmlValue}
@@ -54,9 +67,13 @@ const FormOne = ({
           <FormHelperText>
             Number of results
           </FormHelperText>
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
+
+          <div style={styles.button}>
+            <Button variant="contained" type="submit">
+              Submit
+            </Button>
+          </div>
+
         </FormControl>
       </form>
     </CardContent>

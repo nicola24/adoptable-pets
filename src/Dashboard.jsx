@@ -7,6 +7,13 @@ import SingleAnimal from './SingleAnimal';
 import FormOne from './FormOne';
 import FormTwo from './FormTwo';
 import Header from './Header';
+import Footer from './Footer';
+
+const styles = {
+  grid: {
+    paddingTop: 80,
+  },
+};
 
 class Dashboard extends Component {
   constructor(props) {
@@ -25,6 +32,8 @@ class Dashboard extends Component {
       wrongZipcode: false,
       expanded: false,
       expandedForm: false,
+      expandedAbout: false,
+      expandedHealth: false,
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -39,6 +48,8 @@ class Dashboard extends Component {
     this.fetchBreed = this.fetchBreed.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
     this.handleExpandClickForm = this.handleExpandClickForm.bind(this);
+    this.handleExpandClickAbout = this.handleExpandClickAbout.bind(this);
+    this.handleExpandClickHealth = this.handleExpandClickHealth.bind(this);
   }
 
   handleZipcode(e) {
@@ -83,6 +94,14 @@ class Dashboard extends Component {
     this.setState(state => ({ expandedForm: !state.expandedForm }));
   }
 
+  handleExpandClickAbout() {
+    this.setState(state => ({ expandedAbout: !state.expandedAbout }));
+  }
+
+  handleExpandClickHealth() {
+    this.setState(state => ({ expandedHealth: !state.expandedHealth }));
+  }
+
   handleSubmitBasic(e) {
     const { zipCode, animal, count } = this.state;
 
@@ -122,7 +141,7 @@ class Dashboard extends Component {
     fetch(`/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }))
-      .catch(err => console.log(err));
+      .catch(err => alert('⚠️ Congratulations, you have just found a bug!, working on it!', err));
 
     e.preventDefault();
   }
@@ -142,29 +161,33 @@ class Dashboard extends Component {
       wrongZipcode,
       expanded,
       expandedForm,
+      expandedAbout,
+      expandedHealth,
     } = this.state;
 
     return (
       <div>
         <Header />
-        <section>
-          <Grid container spacing={24} justify="space-around">
-            <Grid item xs={2}>
-              <FormOne
-                onFormSubmit={this.handleSubmitBasic}
-                onChangeZipcode={this.handleZipcode}
-                onChangeAnimal={this.handleAnimal}
-                onChangeCount={this.handleCount}
-                stateZipCode={zipCode}
-                stateAnimal={animal}
-                stateCount={count}
-                stateWrongZipCode={wrongZipcode}
-              />
-              <div id="formTwo">
+        <Grid container justify="space-around" style={styles.grid}>
+          <Grid item xs={2}>
+            <Grid container spacing={8} direction="column">
+              <Grid item>
+                <FormOne
+                  onFormSubmit={this.handleSubmitBasic}
+                  onChangeZipcode={this.handleZipcode}
+                  onChangeAnimal={this.handleAnimal}
+                  onChangeCount={this.handleCount}
+                  stateZipCode={zipCode}
+                  stateAnimal={animal}
+                  stateCount={count}
+                  stateWrongZipCode={wrongZipcode}
+                />
+              </Grid>
+              <Grid item>
                 <FormTwo
                   onFormFullSubmit={this.handleSubmitFull}
                   onChangeBreed={this.handleBreed}
-                  onChangeGender={this.handleBreed}
+                  onChangeGender={this.handleGender}
                   onChangeAge={this.handleAge}
                   onChangeSize={this.handleSize}
                   onChangeCount={this.handleCount}
@@ -177,29 +200,36 @@ class Dashboard extends Component {
                   stateExpandedForm={expandedForm}
                   onChangeExpandedForm={this.handleExpandClickForm}
                 />
-              </div>
-            </Grid>
-            <Grid item xs={5}>
-              {animals === undefined ? 'No Result'
-                : (
-                  <ListAnimals
-                    listOfAnimals={animals}
-                    animalClickHandler={this.handleAnimalClick}
-                  />
-                )}
-            </Grid>
-            <Grid item xs={4}>
-              {currentAnimal.length === 0 ? null
-                : (
-                  <SingleAnimal
-                    singleAnimalDisplay={currentAnimal}
-                    stateExpanded={expanded}
-                    onChangeExpanded={this.handleExpandClick}
-                  />
-                )}
+              </Grid>
+              <Grid item>
+                <Footer />
+              </Grid>
             </Grid>
           </Grid>
-        </section>
+          <Grid item xs={4}>
+            {animals === undefined ? 'No Result'
+              : (
+                <ListAnimals
+                  listOfAnimals={animals}
+                  animalClickHandler={this.handleAnimalClick}
+                />
+              )}
+          </Grid>
+          <Grid item xs={5}>
+            {currentAnimal.length === 0 ? null
+              : (
+                <SingleAnimal
+                  singleAnimalDisplay={currentAnimal}
+                  stateExpanded={expanded}
+                  onChangeExpanded={this.handleExpandClick}
+                  onChangeExpandedAbout={this.handleExpandClickAbout}
+                  stateExpandedAbout={expandedAbout}
+                  onChangeExpandedHealth={this.handleExpandClickHealth}
+                  stateExpandedHealth={expandedHealth}
+                />
+              )}
+          </Grid>
+        </Grid>
       </div>
     );
   }

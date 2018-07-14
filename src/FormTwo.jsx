@@ -12,13 +12,21 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
 
 import { animalAge, animalSize, moreResults } from './data/dropdownOptions';
+
+const styles = {
+  select: {
+    paddingTop: 24,
+  },
+  button: {
+    paddingTop: 20,
+    textAlign: 'center',
+  },
+};
 
 const FormTwo = ({
   onFormFullSubmit, onChangeBreed, onChangeGender, onChangeAge,
@@ -48,18 +56,19 @@ const FormTwo = ({
               Pick a breed
             </FormHelperText>
 
-            <FormLabel component="legend">
-              Gender
-            </FormLabel>
             <RadioGroup
               value={stateGender}
               onChange={onChangeGender}
+              style={styles.select}
             >
               <FormControlLabel value="M" control={<Radio color="primary" />} label="Male" />
               <FormControlLabel value="F" control={<Radio color="primary" />} label="Female" />
             </RadioGroup>
+            <FormHelperText>
+              Gender
+            </FormHelperText>
 
-            <Select value={stateAge} onChange={onChangeAge}>
+            <Select value={stateAge} onChange={onChangeAge} style={styles.select}>
               {animalAge.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
                   {x.option}
@@ -70,7 +79,7 @@ const FormTwo = ({
               Pick an age
             </FormHelperText>
 
-            <Select value={stateSize} onChange={onChangeSize}>
+            <Select value={stateSize} onChange={onChangeSize} style={styles.select}>
               {animalSize.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
                   {x.option}
@@ -81,7 +90,7 @@ const FormTwo = ({
               Pick a size
             </FormHelperText>
 
-            <Select value={stateCount} onChange={onChangeCount}>
+            <Select value={stateCount} onChange={onChangeCount} style={styles.select}>
               {moreResults.map(x => (
                 <MenuItem value={x.htmlValue} key={x.htmlValue}>
                   {x.htmlValue}
@@ -92,9 +101,11 @@ const FormTwo = ({
               Number of Results
             </FormHelperText>
 
-            <Button variant="contained" type="submit">
-              Update
-            </Button>
+            <div style={styles.button}>
+              <Button variant="contained" type="submit">
+                Update Search
+              </Button>
+            </div>
 
           </FormControl>
         </form>
@@ -121,15 +132,3 @@ FormTwo.propTypes = {
 };
 
 export default FormTwo;
-
-{/* <Select value={stateGender} onChange={onChangeGender}>
-  <MenuItem value="M">
-    Male
-  </MenuItem>
-  <MenuItem value="F">
-    Female
-  </MenuItem>
-</Select>
-<FormHelperText>
-  Pick a gender
-</FormHelperText> */}
