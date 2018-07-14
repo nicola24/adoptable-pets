@@ -8,7 +8,10 @@ const Footer = () => (
   <Card>
     <CardContent>
       <Typography variant="caption">
-        Pet Finder by Nicolas Peyrichou, Copyright &copy; 2018
+        {'Pet Finder by Nicolas Peyrichou, Copyright © 2018 - Powered by '}
+        <a href="https://www.petfinder.com" target="_blank" rel="noreferrer noopener">
+        Petfinder.com
+        </a>
       </Typography>
     </CardContent>
   </Card>

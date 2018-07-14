@@ -34,7 +34,7 @@ const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
       role="button"
       tabIndex={0}
     >
-      <List>
+      <List className="animated flipInX">
         <ListItem button dense>
           {filterImgList}
           <ListItemText

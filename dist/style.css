@@ -14,3 +14,9 @@ select {
   outline: 1px solid #CCC;
   background-color: white;
 }
+
+a {
+  color: #4253af;
+  text-decoration: none;
+  font-weight: bold;
+}

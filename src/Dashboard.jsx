@@ -170,7 +170,7 @@ class Dashboard extends Component {
         <Header />
         <Grid container justify="space-around" style={styles.grid}>
           <Grid item xs={2}>
-            <Grid container spacing={8} direction="column">
+            <Grid container spacing={8} direction="column" className="animated rotateIn">
               <Grid item>
                 <FormOne
                   onFormSubmit={this.handleSubmitBasic}
