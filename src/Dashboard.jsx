@@ -140,8 +140,7 @@ class Dashboard extends Component {
 
     fetch(`/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
       .then(res => res.json())
-      .then(data => this.setState({ animals: data.petfinder.pets.pet }))
-      .catch(err => alert('⚠️ Congratulations, you have just found a bug!, working on it!', err));
+      .then(data => this.setState({ animals: data.petfinder.pets.pet }));
 
     e.preventDefault();
   }
@@ -170,7 +169,7 @@ class Dashboard extends Component {
         <Header />
         <Grid container justify="space-around" style={styles.grid}>
           <Grid item xs={2}>
-            <Grid container spacing={8} direction="column" className="animated rotateIn">
+            <Grid container spacing={8} direction="column" className="animated rubberBand">
               <Grid item>
                 <FormOne
                   onFormSubmit={this.handleSubmitBasic}

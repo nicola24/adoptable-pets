@@ -86,7 +86,7 @@ const SingleAnimal = ({
 
   return (
     <div>
-      <Card className="animated bounceIn">
+      <Card className="animated fadeInDownBig">
         <CardContent>
           {filterImgList}
         </CardContent>

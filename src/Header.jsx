@@ -15,7 +15,7 @@ const Header = () => (
             <Pets />
           </Grid>
           <Grid item>
-            Pet Finder Project - Powered by
+            Pet Finder Project
           </Grid>
         </Grid>
       </Typography>
