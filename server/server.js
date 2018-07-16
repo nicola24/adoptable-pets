@@ -70,4 +70,4 @@ app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:count', (req, res
   request(options).pipe(res);
 });
 
-app.listen(port, () => console.log(`*** App listening on port ${port} ***`));
+app.listen(port);

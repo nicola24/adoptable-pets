@@ -9,9 +9,11 @@ const Footer = () => (
     <CardContent>
       <Typography variant="caption">
         {'Pet Finder by Nicolas Peyrichou, Copyright © 2018 - Powered by '}
-        <a href="https://www.petfinder.com" target="_blank" rel="noreferrer noopener">
-        Petfinder.com
-        </a>
+        <Typography variant="caption">
+          <a href="https://www.petfinder.com" target="_blank" rel="noreferrer noopener">
+          Petfinder.com
+          </a>
+        </Typography>
       </Typography>
     </CardContent>
   </Card>

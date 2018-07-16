@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import pink from '@material-ui/core/colors/pink';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import ListAnimals from './ListAnimals';
 import SingleAnimal from './SingleAnimal';
@@ -34,6 +38,7 @@ class Dashboard extends Component {
       expandedForm: false,
       expandedAbout: false,
       expandedHealth: false,
+      themeType: 'light',
     };
     this.handleZipcode = this.handleZipcode.bind(this);
     this.handleAnimal = this.handleAnimal.bind(this);
@@ -50,6 +55,7 @@ class Dashboard extends Component {
     this.handleExpandClickForm = this.handleExpandClickForm.bind(this);
     this.handleExpandClickAbout = this.handleExpandClickAbout.bind(this);
     this.handleExpandClickHealth = this.handleExpandClickHealth.bind(this);
+    this.toggleTheme = this.toggleTheme.bind(this);
   }
 
   handleZipcode(e) {
@@ -102,6 +108,14 @@ class Dashboard extends Component {
     this.setState(state => ({ expandedHealth: !state.expandedHealth }));
   }
 
+  toggleTheme() {
+    const { themeType } = this.state;
+
+    return themeType === 'light'
+      ? this.setState({ themeType: 'dark' })
+      : this.setState({ themeType: 'light' });
+  }
+
   handleSubmitBasic(e) {
     const { zipCode, animal, count } = this.state;
 
@@ -122,7 +136,7 @@ class Dashboard extends Component {
     fetch(`/breedlist/${animal}`)
       .then(res => res.json())
       .then(data => this.setState({
-        breedList: data.petfinder.breeds.breed,
+        breedList: data.petfinder.breeds.breed.filter(x => !x.$t.includes('/')),
         breed: data.petfinder.breeds.breed[0].$t,
       }));
   }
@@ -162,11 +176,22 @@ class Dashboard extends Component {
       expandedForm,
       expandedAbout,
       expandedHealth,
+      themeType,
     } = this.state;
 
+    const theme = createMuiTheme({
+      palette: {
+        primary: pink,
+        type: themeType,
+      },
+    });
+
     return (
-      <div>
-        <Header />
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Header
+          onToggleTheme={this.toggleTheme}
+        />
         <Grid container justify="space-around" style={styles.grid}>
           <Grid item xs={2}>
             <Grid container spacing={8} direction="column" className="animated rubberBand">
@@ -206,7 +231,15 @@ class Dashboard extends Component {
             </Grid>
           </Grid>
           <Grid item xs={4}>
-            {animals === undefined ? 'No Result'
+            {animals === undefined
+              ? (
+                <Typography align="center" variant="subheading">
+                  {'No Result '}
+                  <span role="img" aria-label="sad">
+                    😢
+                  </span>
+                </Typography>
+              )
               : (
                 <ListAnimals
                   listOfAnimals={animals}
@@ -229,7 +262,7 @@ class Dashboard extends Component {
               )}
           </Grid>
         </Grid>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }

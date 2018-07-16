@@ -44,7 +44,6 @@ const FormTwo = ({
       <CardContent>
         <form onSubmit={onFormFullSubmit}>
           <FormControl fullWidth>
-
             <select value={stateBreed} onChange={onChangeBreed}>
               {stateBreedList.map(x => (
                 <option value={x.$t} key={x.$t}>
@@ -55,7 +54,6 @@ const FormTwo = ({
             <FormHelperText>
               Pick a breed
             </FormHelperText>
-
             <RadioGroup
               value={stateGender}
               onChange={onChangeGender}
@@ -67,7 +65,6 @@ const FormTwo = ({
             <FormHelperText>
               Gender
             </FormHelperText>
-
             <Select value={stateAge} onChange={onChangeAge} style={styles.select}>
               {animalAge.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
@@ -78,7 +75,6 @@ const FormTwo = ({
             <FormHelperText>
               Pick an age
             </FormHelperText>
-
             <Select value={stateSize} onChange={onChangeSize} style={styles.select}>
               {animalSize.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
@@ -89,7 +85,6 @@ const FormTwo = ({
             <FormHelperText>
               Pick a size
             </FormHelperText>
-
             <Select value={stateCount} onChange={onChangeCount} style={styles.select}>
               {moreResults.map(x => (
                 <MenuItem value={x.htmlValue} key={x.htmlValue}>
@@ -100,13 +95,11 @@ const FormTwo = ({
             <FormHelperText>
               Number of Results
             </FormHelperText>
-
             <div style={styles.button}>
               <Button variant="contained" type="submit">
                 Update Search
               </Button>
             </div>
-
           </FormControl>
         </form>
       </CardContent>
