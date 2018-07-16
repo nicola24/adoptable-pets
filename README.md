@@ -2,7 +2,7 @@
 
 Adoptable Pets allows you to access to Petfinder's database and find your ideal pet!
 
-:octocat:  [adoptable-pets.herokuapp.com](https://adoptable-pets.herokuapp.com/)
+:octocat: [adoptable-pets.herokuapp.com](https://adoptable-pets.herokuapp.com/)
 
 ## Up & Running
 Install dependencies:
