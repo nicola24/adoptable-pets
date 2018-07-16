@@ -1,6 +1,6 @@
-# Pet Finder Project
+# :dog: Pet Finder Project :cat:
 
-:dog: :cat: Pet Finder Project allows you to access to Petfinder's database and find your ideal pet!
+Pet Finder Project allows you to access to Petfinder's database and find your ideal pet!
 
 :octocat: []()
 
@@ -25,5 +25,8 @@ Pet Finder Project uses:
 - Material-UI
 - Webpack & Babel
 - Animate.css
+
+
+![Alt text](https://i.imgur.com/vWBZxyx.jpg "CraigsMarket")
 
 ![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)

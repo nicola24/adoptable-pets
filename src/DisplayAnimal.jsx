@@ -16,8 +16,13 @@ const styles = {
 
 const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
   const filterImgList = singleAnimal.media.photos
-    ? <Avatar alt="" src={singleAnimal.media.photos.photo.filter(x => x['@size'] === 'fpm')[0].$t} style={styles.avatar} />
-    : (
+    ? (
+      <Avatar
+        alt=""
+        src={singleAnimal.media.photos.photo.filter(x => x['@size'] === 'fpm')[0].$t}
+        style={styles.avatar}
+      />
+    ) : (
       <Avatar style={styles.avatar}>
         {singleAnimal.name.$t[0].toUpperCase()}
       </Avatar>
