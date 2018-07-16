@@ -4,6 +4,7 @@ const request = require('request');
 const { apiKey } = require('./token.js');
 const { url, format } = require('./pet-finder.js');
 
+const { API_KEY } = process.env;
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -16,7 +17,7 @@ app.get('/petbasicfind/:animal/:zipcode/:count', (req, res) => {
   const options = {
     url: [
       `${url}pet.find?${format}`,
-      `key=${apiKey || process.env.API_KEY}`,
+      `key=${apiKey || API_KEY}`,
       `animal=${animal}`,
       `location=${zipcode}`,
       `count=${count}`,
@@ -33,7 +34,7 @@ app.get('/breedlist/:animal', (req, res) => {
   const options = {
     url: [
       `${url}breed.list?${format}`,
-      `key=${apiKey || process.env.API_KEY}`,
+      `key=${apiKey || API_KEY}`,
       `animal=${animal}`,
     ].join('&'),
   };
@@ -56,7 +57,7 @@ app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:count', (req, res
   const options = {
     url: [
       `${url}pet.find?${format}`,
-      `key=${apiKey || process.env.API_KEY}`,
+      `key=${apiKey || API_KEY}`,
       `animal=${animal}`,
       `location=${zipcode}`,
       `breed=${breed}`,
