@@ -26,7 +26,7 @@ const Header = ({ onToggleTheme }) => (
                 <Pets />
               </Grid>
               <Grid item>
-                Pet Finder Project
+                Adoptable Pets
               </Grid>
             </Grid>
           </Typography>
