@@ -18,7 +18,7 @@ $ npm start
 Once the server is running, you can visit `http://localhost:3000/`
 
 ## Composition
-Pet Finder Project uses:
+Adoptable Pets uses:
 - React
 - Node.js
 - Express
