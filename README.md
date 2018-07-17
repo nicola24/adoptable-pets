@@ -27,4 +27,6 @@ Pet Finder Project uses:
 - Animate.css
 - Heroku
 
-![Alt text](https://i.imgur.com/vWBZxyx.jpg "Adoptable Pets")
+![Alt text](https://i.imgur.com/DqtkES1.jpg "Adoptable Pets")
+
+![Alt text](https://i.imgur.com/ukEf2cE.png "Adoptable Pets")
