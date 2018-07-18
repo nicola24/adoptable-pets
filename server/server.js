@@ -16,7 +16,7 @@ app.get('/petbasicfind/:animal/:zipcode/:count', (req, res) => {
   const options = {
     url: [
       `${url}pet.find?${format}`,
-      `key=${process.env.API_KEY}`,
+      `key=${apiKey || process.env.API_KEY}`,
       `animal=${animal}`,
       `location=${zipcode}`,
       `count=${count}`,
@@ -33,7 +33,7 @@ app.get('/breedlist/:animal', (req, res) => {
   const options = {
     url: [
       `${url}breed.list?${format}`,
-      `key=${process.env.API_KEY}`,
+      `key=${apiKey || process.env.API_KEY}`,
       `animal=${animal}`,
     ].join('&'),
   };
@@ -56,7 +56,7 @@ app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:count', (req, res
   const options = {
     url: [
       `${url}pet.find?${format}`,
-      `key=${process.env.API_KEY}`,
+      `key=${apiKey || process.env.API_KEY}`,
       `animal=${animal}`,
       `location=${zipcode}`,
       `breed=${breed}`,

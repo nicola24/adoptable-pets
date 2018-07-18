@@ -5,6 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import pink from '@material-ui/core/colors/pink';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Button from '@material-ui/core/Button';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+
+import ScrollToTop from 'react-scroll-up';
 
 import ListAnimals from './ListAnimals';
 import SingleAnimal from './SingleAnimal';
@@ -262,6 +266,11 @@ class Dashboard extends Component {
               )}
           </Grid>
         </Grid>
+        <ScrollToTop showUnder={160}>
+          <Button variant="fab" color="primary" mini>
+            <ExpandLess />
+          </Button>
+        </ScrollToTop>
       </MuiThemeProvider>
     );
   }
