@@ -7,7 +7,6 @@ import pink from '@material-ui/core/colors/pink';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import ExpandLess from '@material-ui/icons/ExpandLess';
-
 import ScrollToTop from 'react-scroll-up';
 
 import ListAnimals from './ListAnimals';
