@@ -44,7 +44,7 @@ const SingleAnimal = ({
   const filterImgList = singleAnimalDisplay[0].media.photos
     ? (
       <div style={styles.root}>
-        <GridList cellHeight="auto" style={styles.gridList} cols={3}>
+        <GridList cellHeight={300} style={styles.gridList} cols={3}>
           {singleAnimalDisplay[0].media.photos.photo.filter(x => x['@size'] === 'pn').map(tile => (
             <GridListTile key={tile['@id']}>
               <img src={tile.$t} alt="" />
