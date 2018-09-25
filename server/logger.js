@@ -9,7 +9,6 @@ const logger = {
     Server started ! ${chalk.green('✓')} \n
     ${chalk.bold('Access URLs:')}${divider}
     Localhost: ${chalk.magenta(`http://localhost:${port}`)}${divider}
-    ${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
     `),
 };
 
