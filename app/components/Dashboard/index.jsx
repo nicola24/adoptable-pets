@@ -119,7 +119,7 @@ class Dashboard extends Component {
   handleSubmitBasic(e) {
     const { zipCode, animal, count } = this.state;
 
-    fetch(`/petbasicfind/${animal}/${zipCode}/${count}`)
+    fetch(`api/petbasicfind/${animal}/${zipCode}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({
         animals: data.petfinder.pets.pet,
@@ -133,7 +133,7 @@ class Dashboard extends Component {
   fetchBreed() {
     const { animal } = this.state;
 
-    fetch(`/breedlist/${animal}`)
+    fetch(`api/breedlist/${animal}`)
       .then(res => res.json())
       .then(data => this.setState({
         breedList: data.petfinder.breeds.breed.filter(x => !x.$t.includes('/')),
@@ -152,7 +152,7 @@ class Dashboard extends Component {
       count,
     } = this.state;
 
-    fetch(`/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
+    fetch(`api/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }));
 
