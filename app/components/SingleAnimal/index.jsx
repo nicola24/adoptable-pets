@@ -17,7 +17,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import Grid from '@material-ui/core/Grid';
 
 import styles from './styles';
-import 'animate.css/source/fading_entrances/fadeInDownBig.css';
+import 'animate.css/source/fading_entrances/fadeInRightBig.css';
 
 const SingleAnimal = ({
   singleAnimalDisplay, stateExpanded, onChangeExpanded, onChangeExpandedAbout,
@@ -66,7 +66,7 @@ const SingleAnimal = ({
   };
 
   return (
-    <Card className="animated fadeInDownBig">
+    <Card className="animated fadeInRightBig">
       <CardContent>
         {filterImgList}
       </CardContent>
