@@ -1,17 +1,16 @@
 const express = require('express');
 const request = require('request');
 
-// const { apiKey } = require('./token.js');
-const { url, format } = require('./pet-finder.js');
+const router = express.Router();
 
-const apiKey = process.env.API_KEY;
-const app = express();
-const port = process.env.PORT || 3000;
+const { apiKey } = require('../token.js');
+// const apiKey = process.env.API_KEY; // heroku token
 
-app.use(express.static('dist'));
+const url = 'http://api.petfinder.com/';
+const format = 'format=json';
 
 // return a list of animals filtered by animal type and zipcode location
-app.get('/petbasicfind/:animal/:zipcode/:count', (req, res) => {
+router.route('/petbasicfind/:animal/:zipcode/:count').get((req, res) => {
   const { animal, zipcode, count } = req.params;
 
   const options = {
@@ -28,7 +27,7 @@ app.get('/petbasicfind/:animal/:zipcode/:count', (req, res) => {
 });
 
 // return a list of the breed for a specific type of animal
-app.get('/breedlist/:animal', (req, res) => {
+router.route('/breedlist/:animal').get((req, res) => {
   const { animal } = req.params;
 
   const options = {
@@ -43,7 +42,7 @@ app.get('/breedlist/:animal', (req, res) => {
 });
 
 // return a list of animals filtered by animal type, zipcode, breed, gender, size, age
-app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:count', (req, res) => {
+router.route('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:count').get((req, res) => {
   const {
     animal,
     zipcode,
@@ -71,4 +70,4 @@ app.get('/petfullfind/:animal/:zipcode/:breed/:sex/:age/:size/:count', (req, res
   request(options).pipe(res);
 });
 
-app.listen(port, () => console.log(`*** App listening on port ${port}! ***`));
+module.exports = router;

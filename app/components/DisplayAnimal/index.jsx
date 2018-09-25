@@ -7,12 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 
-const styles = {
-  avatar: {
-    width: 80,
-    height: 80,
-  },
-};
+import styles from './styles';
+import 'animate.css/source/flippers/flipInX.css';
 
 const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
   const filterImgList = singleAnimal.media.photos

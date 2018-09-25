@@ -10,21 +10,12 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import { typeOfAnimal, moreResults } from './data/dropdownOptions';
-
-const styles = {
-  select: {
-    paddingTop: 24,
-  },
-  button: {
-    paddingTop: 20,
-    textAlign: 'center',
-  },
-};
+import { typeOfAnimal, moreResults } from '../../utils/options';
+import styles from './styles';
 
 const FormOne = ({
   onFormSubmit, onChangeZipcode, onChangeAnimal, onChangeCount,
-  stateZipCode, stateAnimal, stateCount, stateWrongZipCode,
+  stateAnimal, stateCount, stateWrongZipCode,
 }) => (
   <Card>
     <CardContent>
@@ -33,7 +24,6 @@ const FormOne = ({
           <TextField
             label="Pick a ZipCode"
             type="number"
-            value={stateZipCode}
             onChange={onChangeZipcode}
             error={stateWrongZipCode}
             required
@@ -80,7 +70,6 @@ FormOne.propTypes = {
   onChangeZipcode: PropTypes.func.isRequired,
   onChangeAnimal: PropTypes.func.isRequired,
   onChangeCount: PropTypes.func.isRequired,
-  stateZipCode: PropTypes.string.isRequired,
   stateAnimal: PropTypes.string.isRequired,
   stateCount: PropTypes.string.isRequired,
   stateWrongZipCode: PropTypes.bool.isRequired,

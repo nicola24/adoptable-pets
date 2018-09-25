@@ -16,17 +16,9 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import { animalAge, animalSize, moreResults } from './data/dropdownOptions';
-
-const styles = {
-  select: {
-    paddingTop: 24,
-  },
-  button: {
-    paddingTop: 20,
-    textAlign: 'center',
-  },
-};
+import { animalAge, animalSize, moreResults } from '../../utils/options';
+import styles from './styles';
+import DropDown from './DropDown';
 
 const FormTwo = ({
   onFormFullSubmit, onChangeBreed, onChangeGender, onChangeAge,
@@ -44,13 +36,13 @@ const FormTwo = ({
       <CardContent>
         <form onSubmit={onFormFullSubmit}>
           <FormControl fullWidth>
-            <select value={stateBreed} onChange={onChangeBreed}>
+            <DropDown value={stateBreed} onChange={onChangeBreed}>
               {stateBreedList.map(x => (
                 <option value={x.$t} key={x.$t}>
                   {x.$t}
                 </option>
               ))}
-            </select>
+            </DropDown>
             <FormHelperText>
               Pick a breed
             </FormHelperText>

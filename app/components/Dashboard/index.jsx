@@ -9,18 +9,15 @@ import Button from '@material-ui/core/Button';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ScrollToTop from 'react-scroll-up';
 
-import ListAnimals from './ListAnimals';
-import SingleAnimal from './SingleAnimal';
-import FormOne from './FormOne';
-import FormTwo from './FormTwo';
-import Header from './Header';
-import Footer from './Footer';
+import ListAnimals from '../ListAnimals';
+import SingleAnimal from '../SingleAnimal';
+import FormOne from '../FormOne';
+import FormTwo from '../FormTwo';
+import Header from '../Header';
+import Footer from '../Footer';
 
-const styles = {
-  grid: {
-    paddingTop: 80,
-  },
-};
+import styles from './styles';
+import 'animate.css/source/attention_seekers/rubberBand.css';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -167,7 +164,6 @@ class Dashboard extends Component {
       animals,
       breedList,
       currentAnimal,
-      zipCode,
       animal,
       count,
       breed,
@@ -204,7 +200,6 @@ class Dashboard extends Component {
                   onChangeZipcode={this.handleZipcode}
                   onChangeAnimal={this.handleAnimal}
                   onChangeCount={this.handleCount}
-                  stateZipCode={zipCode}
                   stateAnimal={animal}
                   stateCount={count}
                   stateWrongZipCode={wrongZipcode}

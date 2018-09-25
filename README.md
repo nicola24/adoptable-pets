@@ -22,8 +22,9 @@ Adoptable Pets uses:
 - React
 - Node.js
 - Express
-- Material-UI
 - Webpack & Babel
+- Material-UI
+- styled-components
 - Animate.css
 - Heroku
 

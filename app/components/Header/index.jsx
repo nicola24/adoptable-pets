@@ -9,11 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InvertColors from '@material-ui/icons/InvertColors';
 
-const styles = {
-  title: {
-    fontWeight: 'bold',
-  },
-};
+import styles from './styles';
 
 const Header = ({ onToggleTheme }) => (
   <AppBar position="absolute" className="animated bounceInLeft">

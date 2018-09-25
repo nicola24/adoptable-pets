@@ -16,26 +16,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Grid from '@material-ui/core/Grid';
 
-const styles = {
-  root: {
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-  },
-  gridList: {
-    height: 450,
-  },
-  avatar: {
-    width: 200,
-    height: 200,
-    fontSize: 100,
-  },
-  row: {
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: 10,
-  },
-};
+import styles from './styles';
+import 'animate.css/source/fading_entrances/fadeInDownBig.css';
 
 const SingleAnimal = ({
   singleAnimalDisplay, stateExpanded, onChangeExpanded, onChangeExpandedAbout,
