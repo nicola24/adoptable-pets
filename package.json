@@ -4,10 +4,11 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "npm run build && node server/index.js",
+    "start": "node server/index.js",
     "dev": "webpack --mode=development -w",
     "build": "webpack --mode=production",
-    "analyze": "webpack --json > stats.json"
+    "analyze": "webpack --json > stats.json",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
