@@ -1,11 +1,6 @@
 const styles = {
-  root: {
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-  },
-  gridList: {
-    height: 450,
+  content: {
+    marginLeft: 25,
   },
   avatar: {
     width: 200,
