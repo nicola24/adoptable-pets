@@ -6,6 +6,7 @@ import FullScreenVideo from './FullScreenVideo';
 import Overlay from './Overlay';
 import Content from './Content';
 import Video from './Video';
+import Div from './Div';
 import H1 from './H1';
 import P from './P';
 
@@ -30,6 +31,11 @@ const Homepage = () => (
       <Button to="/dashboard">
         Find A Pet
       </Button>
+      <Div>
+        <a href="https://github.com/nicola24/adoptable-pets" target="_blank" rel="noopener noreferrer">
+          <img alt="github" src="https://i.imgur.com/7LQJRWK.png" width="70" />
+        </a>
+      </Div>
     </Content>
   </Container>
 );
