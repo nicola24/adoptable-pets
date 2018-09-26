@@ -11,7 +11,7 @@ import H1 from './H1';
 import P from './P';
 import GitHub from '../../images/github.png';
 
-const HomePage = () => (
+const Home = () => (
   <Container>
     <FullScreenVideo>
       <Video
@@ -41,4 +41,4 @@ const HomePage = () => (
   </Container>
 );
 
-export default HomePage;
+export default Home;
