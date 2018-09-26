@@ -20,10 +20,11 @@ Once the server is running, you can visit `http://localhost:3000/`
 ## Composition
 Adoptable Pets uses:
 - React
-- Node.js
-- Express
-- Material-UI
+- Node.js/ Express
 - Webpack & Babel
+- Material-UI
+- styled-components
+- React-router
 - Animate.css
 - Heroku
 

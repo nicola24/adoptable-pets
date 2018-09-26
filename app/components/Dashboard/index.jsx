@@ -9,18 +9,15 @@ import Button from '@material-ui/core/Button';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ScrollToTop from 'react-scroll-up';
 
-import ListAnimals from './ListAnimals';
-import SingleAnimal from './SingleAnimal';
-import FormOne from './FormOne';
-import FormTwo from './FormTwo';
-import Header from './Header';
-import Footer from './Footer';
+import ListAnimals from '../ListAnimals';
+import SingleAnimal from '../SingleAnimal';
+import FormOne from '../FormOne';
+import FormTwo from '../FormTwo';
+import Header from '../Header';
+import Footer from '../Footer';
 
-const styles = {
-  grid: {
-    paddingTop: 80,
-  },
-};
+import styles from './styles';
+import 'animate.css/source/fading_entrances/fadeInDownBig.css';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -122,7 +119,7 @@ class Dashboard extends Component {
   handleSubmitBasic(e) {
     const { zipCode, animal, count } = this.state;
 
-    fetch(`/petbasicfind/${animal}/${zipCode}/${count}`)
+    fetch(`api/petbasicfind/${animal}/${zipCode}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({
         animals: data.petfinder.pets.pet,
@@ -136,7 +133,7 @@ class Dashboard extends Component {
   fetchBreed() {
     const { animal } = this.state;
 
-    fetch(`/breedlist/${animal}`)
+    fetch(`api/breedlist/${animal}`)
       .then(res => res.json())
       .then(data => this.setState({
         breedList: data.petfinder.breeds.breed.filter(x => !x.$t.includes('/')),
@@ -155,7 +152,7 @@ class Dashboard extends Component {
       count,
     } = this.state;
 
-    fetch(`/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
+    fetch(`api/petfullfind/${animal}/${zipCode}/${breed}/${gender}/${age}/${size}/${count}`)
       .then(res => res.json())
       .then(data => this.setState({ animals: data.petfinder.pets.pet }));
 
@@ -167,7 +164,6 @@ class Dashboard extends Component {
       animals,
       breedList,
       currentAnimal,
-      zipCode,
       animal,
       count,
       breed,
@@ -190,87 +186,88 @@ class Dashboard extends Component {
     });
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Header
-          onToggleTheme={this.toggleTheme}
-        />
-        <Grid container justify="space-around" style={styles.grid}>
-          <Grid item xs={2}>
-            <Grid container spacing={8} direction="column" className="animated rubberBand">
-              <Grid item>
-                <FormOne
-                  onFormSubmit={this.handleSubmitBasic}
-                  onChangeZipcode={this.handleZipcode}
-                  onChangeAnimal={this.handleAnimal}
-                  onChangeCount={this.handleCount}
-                  stateZipCode={zipCode}
-                  stateAnimal={animal}
-                  stateCount={count}
-                  stateWrongZipCode={wrongZipcode}
-                />
-              </Grid>
-              <Grid item>
-                <FormTwo
-                  onFormFullSubmit={this.handleSubmitFull}
-                  onChangeBreed={this.handleBreed}
-                  onChangeGender={this.handleGender}
-                  onChangeAge={this.handleAge}
-                  onChangeSize={this.handleSize}
-                  onChangeCount={this.handleCount}
-                  stateBreedList={breedList}
-                  stateBreed={breed}
-                  stateGender={gender}
-                  stateAge={age}
-                  stateSize={size}
-                  stateCount={count}
-                  stateExpandedForm={expandedForm}
-                  onChangeExpandedForm={this.handleExpandClickForm}
-                />
-              </Grid>
-              <Grid item>
-                <Footer />
+      <div className="animated fadeInDownBig">
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <Header
+            onToggleTheme={this.toggleTheme}
+          />
+          <Grid container justify="space-around" style={styles.grid}>
+            <Grid item xs={2}>
+              <Grid container spacing={8} direction="column">
+                <Grid item>
+                  <FormOne
+                    onFormSubmit={this.handleSubmitBasic}
+                    onChangeZipcode={this.handleZipcode}
+                    onChangeAnimal={this.handleAnimal}
+                    onChangeCount={this.handleCount}
+                    stateAnimal={animal}
+                    stateCount={count}
+                    stateWrongZipCode={wrongZipcode}
+                  />
+                </Grid>
+                <Grid item>
+                  <FormTwo
+                    onFormFullSubmit={this.handleSubmitFull}
+                    onChangeBreed={this.handleBreed}
+                    onChangeGender={this.handleGender}
+                    onChangeAge={this.handleAge}
+                    onChangeSize={this.handleSize}
+                    onChangeCount={this.handleCount}
+                    stateBreedList={breedList}
+                    stateBreed={breed}
+                    stateGender={gender}
+                    stateAge={age}
+                    stateSize={size}
+                    stateCount={count}
+                    stateExpandedForm={expandedForm}
+                    onChangeExpandedForm={this.handleExpandClickForm}
+                  />
+                </Grid>
+                <Grid item>
+                  <Footer />
+                </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={4}>
+              {animals === undefined
+                ? (
+                  <Typography align="center" variant="subheading">
+                    {'No Result '}
+                    <span role="img" aria-label="sad">
+                      😢
+                    </span>
+                  </Typography>
+                )
+                : (
+                  <ListAnimals
+                    listOfAnimals={animals}
+                    animalClickHandler={this.handleAnimalClick}
+                  />
+                )}
+            </Grid>
+            <Grid item xs={5}>
+              {currentAnimal.length === 0 ? null
+                : (
+                  <SingleAnimal
+                    singleAnimalDisplay={currentAnimal}
+                    stateExpanded={expanded}
+                    onChangeExpanded={this.handleExpandClick}
+                    onChangeExpandedAbout={this.handleExpandClickAbout}
+                    stateExpandedAbout={expandedAbout}
+                    onChangeExpandedHealth={this.handleExpandClickHealth}
+                    stateExpandedHealth={expandedHealth}
+                  />
+                )}
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            {animals === undefined
-              ? (
-                <Typography align="center" variant="subheading">
-                  {'No Result '}
-                  <span role="img" aria-label="sad">
-                    😢
-                  </span>
-                </Typography>
-              )
-              : (
-                <ListAnimals
-                  listOfAnimals={animals}
-                  animalClickHandler={this.handleAnimalClick}
-                />
-              )}
-          </Grid>
-          <Grid item xs={5}>
-            {currentAnimal.length === 0 ? null
-              : (
-                <SingleAnimal
-                  singleAnimalDisplay={currentAnimal}
-                  stateExpanded={expanded}
-                  onChangeExpanded={this.handleExpandClick}
-                  onChangeExpandedAbout={this.handleExpandClickAbout}
-                  stateExpandedAbout={expandedAbout}
-                  onChangeExpandedHealth={this.handleExpandClickHealth}
-                  stateExpandedHealth={expandedHealth}
-                />
-              )}
-          </Grid>
-        </Grid>
-        <ScrollToTop showUnder={160}>
-          <Button variant="fab" color="primary" mini>
-            <ExpandLess />
-          </Button>
-        </ScrollToTop>
-      </MuiThemeProvider>
+          <ScrollToTop showUnder={160}>
+            <Button variant="fab" color="primary" mini>
+              <ExpandLess />
+            </Button>
+          </ScrollToTop>
+        </MuiThemeProvider>
+      </div>
     );
   }
 }

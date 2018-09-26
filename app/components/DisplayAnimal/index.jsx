@@ -7,12 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 
-const styles = {
-  avatar: {
-    width: 80,
-    height: 80,
-  },
-};
+import styles from './styles';
+import 'animate.css/source/attention_seekers/rubberBand.css';
 
 const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
   const filterImgList = singleAnimal.media.photos
@@ -39,7 +35,7 @@ const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
       role="button"
       tabIndex={0}
     >
-      <List className="animated flipInX">
+      <List className="animated rubberBand">
         <ListItem button dense>
           {filterImgList}
           <ListItemText

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 
-import DisplayAnimal from './DisplayAnimal';
+import DisplayAnimal from '../DisplayAnimal';
 
 const ListAnimals = ({ listOfAnimals, animalClickHandler }) => (
   <div>

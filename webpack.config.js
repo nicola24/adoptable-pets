@@ -1,6 +1,6 @@
 module.exports = {
   entry: [
-    './src/Index.jsx',
+    './app/app.jsx',
   ],
   module: {
     rules: [
@@ -8,6 +8,22 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[sha512:hash:base64:7].[ext]',
+              outputPath: 'assets/',
+            },
+          },
+        ],
       },
     ],
   },
