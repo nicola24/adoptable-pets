@@ -4,10 +4,11 @@ import P from './P';
 import Button from './Button';
 import Container from './Container';
 import Img from './Img';
+import NotFoundImg from '../../images/notfound.png';
 
 const NotFoundPage = () => (
   <Container>
-    <Img src="https://i.imgur.com/C5Snwa4.png" alt="404" />
+    <Img src={NotFoundImg} alt="404" />
     <P>
       Sorry, the page was not found
     </P>
