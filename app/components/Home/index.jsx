@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Typist from 'react-typist';
+
 import Button from './Button';
 import Container from './Container';
 import FullScreenVideo from './FullScreenVideo';
@@ -7,6 +9,7 @@ import Overlay from './Overlay';
 import Content from './Content';
 import Video from './Video';
 import Div from './Div';
+import Textcontent from './Textcontent';
 import H1 from './H1';
 import P from './P';
 import GitHub from '../../images/github.png';
@@ -23,12 +26,22 @@ const Home = () => (
     </FullScreenVideo>
     <Overlay />
     <Content>
-      <H1>
-        Welcome to Adoptable Pets
-      </H1>
-      <P>
-        Ready to find your dream pet?
-      </P>
+      <Textcontent>
+        <H1>
+          <Typist startDelay={500} cursor={{ hideWhenDone: true }}>
+            Welcome to Adoptable Pets
+          </Typist>
+        </H1>
+        <P>
+          <Typist startDelay={2800}>
+            Ready to find your dream puppy?
+            <Typist.Backspace count={6} delay={800} />
+            kitten?
+            <Typist.Backspace count={7} delay={800} />
+            pet?
+          </Typist>
+        </P>
+      </Textcontent>
       <Button to="/dashboard">
         Find A Pet
       </Button>
