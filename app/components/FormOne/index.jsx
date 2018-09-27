@@ -14,8 +14,7 @@ import { typeOfAnimal, moreResults } from '../../utils/options';
 import styles from './styles';
 
 const FormOne = ({
-  onFormSubmit, onChangeZipcode, onChangeAnimal, onChangeCount,
-  stateAnimal, stateCount, stateWrongZipCode,
+  onFormSubmit, handleEvent, stateAnimal, stateCount, stateWrongZipCode,
 }) => (
   <Card>
     <CardContent>
@@ -24,9 +23,10 @@ const FormOne = ({
           <TextField
             label="Pick a ZipCode"
             type="number"
-            onChange={onChangeZipcode}
+            onChange={handleEvent}
             error={stateWrongZipCode}
             required
+            name="zipCode"
           />
           {!stateWrongZipCode ? null
             : (
@@ -34,7 +34,7 @@ const FormOne = ({
                 Please select a valid ZipCode
               </FormHelperText>
             )}
-          <Select value={stateAnimal} onChange={onChangeAnimal} style={styles.select}>
+          <Select value={stateAnimal} onChange={handleEvent} style={styles.select} name="animal">
             {typeOfAnimal.map(x => (
               <MenuItem value={x.htmlValue} key={x.id}>
                 {x.option}
@@ -44,7 +44,7 @@ const FormOne = ({
           <FormHelperText>
             Pick an animal
           </FormHelperText>
-          <Select value={stateCount} onChange={onChangeCount} style={styles.select}>
+          <Select value={stateCount} onChange={handleEvent} style={styles.select} name="count">
             {moreResults.map(x => (
               <MenuItem value={x.htmlValue} key={x.htmlValue}>
                 {x.htmlValue}
@@ -67,9 +67,7 @@ const FormOne = ({
 
 FormOne.propTypes = {
   onFormSubmit: PropTypes.func.isRequired,
-  onChangeZipcode: PropTypes.func.isRequired,
-  onChangeAnimal: PropTypes.func.isRequired,
-  onChangeCount: PropTypes.func.isRequired,
+  handleEvent: PropTypes.func.isRequired,
   stateAnimal: PropTypes.string.isRequired,
   stateCount: PropTypes.string.isRequired,
   stateWrongZipCode: PropTypes.bool.isRequired,

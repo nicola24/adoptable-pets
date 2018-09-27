@@ -19,8 +19,7 @@ import Gallery from 'react-grid-gallery';
 import styles from './styles';
 
 const SingleAnimal = ({
-  singleAnimalDisplay, stateExpanded, onChangeExpanded, onChangeExpandedAbout,
-  stateExpandedAbout, onChangeExpandedHealth, stateExpandedHealth,
+  singleAnimalDisplay, stateExpandedInfo, handleExpand, stateExpandedAbout, stateExpandedHealth,
 }) => {
   const filterImgList = () => {
     const imgs = [];
@@ -102,7 +101,7 @@ const SingleAnimal = ({
         </Typography>
       </CardContent>
       <Typography variant="headline" color="primary">
-        <IconButton onClick={onChangeExpandedHealth}>
+        <IconButton onClick={(() => handleExpand('expandedHealth'))}>
           <ExpandMoreIcon />
         </IconButton>
         Health
@@ -115,7 +114,7 @@ const SingleAnimal = ({
         </CardContent>
       </Collapse>
       <Typography variant="headline" color="primary">
-        <IconButton onClick={onChangeExpandedAbout}>
+        <IconButton onClick={() => handleExpand('expandedAbout')}>
           <ExpandMoreIcon />
         </IconButton>
         About
@@ -128,45 +127,45 @@ const SingleAnimal = ({
         </CardContent>
       </Collapse>
       <Typography variant="headline" color="primary">
-        <IconButton onClick={onChangeExpanded}>
+        <IconButton onClick={() => handleExpand('expandedInfo')}>
           <ExpandMoreIcon />
         </IconButton>
         Contact Information
       </Typography>
-      <Collapse in={stateExpanded} timeout="auto" unmountOnExit>
+      <Collapse in={stateExpandedInfo} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph variant="subheading">
-            <Grid container spacing={16} alignItems="center">
-              <Grid item>
-                <LocationOn />
-              </Grid>
-              <Grid item>
+          <Grid container spacing={16} alignItems="baseline" justify="flex-start">
+            <Grid item>
+              <LocationOn />
+            </Grid>
+            <Grid item>
+              <Typography paragraph variant="subheading">
                 {singleAnimalDisplay[0].contact.address1.$t}
                 <br />
                 {fullAdress}
-              </Grid>
+              </Typography>
             </Grid>
-          </Typography>
-          <Typography paragraph variant="subheading">
-            <Grid container spacing={16} alignItems="center">
-              <Grid item>
-                <Phone />
-              </Grid>
-              <Grid item>
+          </Grid>
+          <Grid container spacing={16} alignItems="baseline" justify="flex-start">
+            <Grid item>
+              <Phone />
+            </Grid>
+            <Grid item>
+              <Typography paragraph variant="subheading">
                 {singleAnimalDisplay[0].contact.phone.$t}
-              </Grid>
+              </Typography>
             </Grid>
-          </Typography>
-          <Typography paragraph variant="subheading">
-            <Grid container spacing={16} alignItems="center">
-              <Grid item>
-                <Mail />
-              </Grid>
-              <Grid item>
+          </Grid>
+          <Grid container spacing={16} alignItems="baseline" justify="flex-start">
+            <Grid item>
+              <Mail />
+            </Grid>
+            <Grid item>
+              <Typography paragraph variant="subheading">
                 {singleAnimalDisplay[0].contact.email.$t}
-              </Grid>
+              </Typography>
             </Grid>
-          </Typography>
+          </Grid>
         </CardContent>
       </Collapse>
     </Card>
@@ -175,11 +174,9 @@ const SingleAnimal = ({
 
 SingleAnimal.propTypes = {
   singleAnimalDisplay: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onChangeExpanded: PropTypes.func.isRequired,
-  stateExpanded: PropTypes.bool.isRequired,
-  onChangeExpandedAbout: PropTypes.func.isRequired,
+  handleExpand: PropTypes.func.isRequired,
+  stateExpandedInfo: PropTypes.bool.isRequired,
   stateExpandedAbout: PropTypes.bool.isRequired,
-  onChangeExpandedHealth: PropTypes.func.isRequired,
   stateExpandedHealth: PropTypes.bool.isRequired,
 };
 
