@@ -12,7 +12,7 @@ import InvertColors from '@material-ui/icons/InvertColors';
 import styles from './styles';
 
 const Header = ({ onToggleTheme }) => (
-  <AppBar position="absolute" className="animated bounceInLeft">
+  <AppBar position="sticky" className="animated bounceInLeft">
     <Toolbar>
       <Grid container justify="space-between" alignItems="center">
         <Grid item>

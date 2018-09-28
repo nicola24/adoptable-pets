@@ -4,11 +4,14 @@ const styles = {
     height: 300,
     fontSize: 100,
     borderStyle: 'solid',
-    borderWidth: 8,
+    borderWidth: 6,
     borderColor: '#E91E63',
   },
   drawer: {
-    width: 260,
+    width: 270,
+  },
+  bottom: {
+    marginBottom: 10,
   },
 };
 
