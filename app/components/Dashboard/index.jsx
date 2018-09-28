@@ -17,7 +17,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 import styles from './styles';
-import 'animate.css/source/fading_entrances/fadeInDownBig.css';
+import 'animate.css/source/bouncing_entrances/bounceIn.css';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -38,6 +38,7 @@ class Dashboard extends Component {
       expandedForm: false,
       expandedAbout: false,
       expandedHealth: false,
+      expandedGallery: false,
       theme: 'light',
     };
     this.handleEvent = this.handleEvent.bind(this);
@@ -130,6 +131,7 @@ class Dashboard extends Component {
       expandedForm,
       expandedAbout,
       expandedHealth,
+      expandedGallery,
       theme,
     } = this.state;
 
@@ -141,7 +143,7 @@ class Dashboard extends Component {
     });
 
     return (
-      <div className="animated fadeInDownBig">
+      <div className="animated bounceIn">
         <MuiThemeProvider theme={themeMode}>
           <CssBaseline />
           <Header
@@ -203,6 +205,7 @@ class Dashboard extends Component {
                     stateExpandedInfo={expandedInfo}
                     stateExpandedAbout={expandedAbout}
                     stateExpandedHealth={expandedHealth}
+                    stateExpandedGallery={expandedGallery}
                     handleExpand={this.handleExpand}
                   />
                 )}

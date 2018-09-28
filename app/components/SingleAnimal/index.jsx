@@ -13,46 +13,51 @@ import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import Drawer from '@material-ui/core/Drawer';
+
+import ImgGallery from '../ImgGallery';
 
 import 'animate.css/source/fading_entrances/fadeInRightBig.css';
-import Gallery from 'react-grid-gallery';
+import 'animate.css/source/attention_seekers/tada.css';
 import styles from './styles';
 
 const SingleAnimal = ({
-  singleAnimalDisplay, stateExpandedInfo, handleExpand, stateExpandedAbout, stateExpandedHealth,
+  singleAnimalDisplay, stateExpandedInfo, handleExpand,
+  stateExpandedAbout, stateExpandedHealth, stateExpandedGallery,
 }) => {
-  const filterImgList = () => {
-    const imgs = [];
-    if (singleAnimalDisplay[0].media.photos) {
-      singleAnimalDisplay[0].media.photos.photo.forEach((x) => {
-        if (x['@size'] === 'x') {
-          imgs.push({
-            src: x.$t,
-            thumbnail: x.$t,
-            thumbnailWidth: 0,
-            thumbnailHeight: 0,
-            alt: 'img',
-          });
-        }
-      });
-      return (
-        <div style={styles.content}>
-          <Gallery
-            images={imgs}
-            margin={3}
-            enableImageSelection={false}
-          />
-        </div>
-      );
-    }
-    return (
-      <div style={styles.row}>
-        <Avatar style={styles.avatar}>
-          {singleAnimalDisplay[0].name.$t[0].toUpperCase()}
-        </Avatar>
-      </div>
-    );
-  };
+  const ImgOrAvatar = singleAnimalDisplay[0].media.photos ? (
+    <div>
+      <Grid
+        item
+        onClick={() => handleExpand('expandedGallery')}
+        onMouseOver={() => handleExpand('expandedGallery')} // HERE
+      >
+        <Avatar
+          style={styles.avatar}
+          alt="pet_img"
+          src={singleAnimalDisplay[0].media.photos.photo[2].$t}
+        />
+      </Grid>
+      <Grid item>
+        {/* <ImgGallery singleAnimalDisplay={singleAnimalDisplay} /> */}
+        <Drawer
+          anchor="right"
+          open={stateExpandedGallery}
+          onClose={() => handleExpand('expandedGallery')}
+        >
+          <div style={styles.drawer}>
+            <ImgGallery singleAnimalDisplay={singleAnimalDisplay} />
+          </div>
+        </Drawer>
+      </Grid>
+    </div>
+  ) : (
+    <Grid item>
+      <Avatar style={styles.avatar}>
+        {singleAnimalDisplay[0].name.$t[0].toUpperCase()}
+      </Avatar>
+    </Grid>
+  );
 
   const breedList = Array.isArray(singleAnimalDisplay[0].breeds.breed)
     ? singleAnimalDisplay[0].breeds.breed.map(x => Object.values(x)).join(' & ')
@@ -80,7 +85,14 @@ const SingleAnimal = ({
   return (
     <Card className="animated fadeInRightBig">
       <CardContent>
-        {filterImgList()}
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          {ImgOrAvatar}
+        </Grid>
       </CardContent>
       <CardContent>
         <Typography gutterBottom variant="display1" component="h2" color="primary">
@@ -178,6 +190,7 @@ SingleAnimal.propTypes = {
   stateExpandedInfo: PropTypes.bool.isRequired,
   stateExpandedAbout: PropTypes.bool.isRequired,
   stateExpandedHealth: PropTypes.bool.isRequired,
+  stateExpandedGallery: PropTypes.bool.isRequired,
 };
 
 export default SingleAnimal;

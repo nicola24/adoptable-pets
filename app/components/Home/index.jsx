@@ -10,8 +10,8 @@ import Content from './Content';
 import Video from './Video';
 import Div from './Div';
 import Textcontent from './Textcontent';
-import H1 from './H1';
-import P from './P';
+import Title from './Title';
+import Subtitle from './Subtitle';
 import GitHub from '../../images/github.png';
 
 const Home = () => (
@@ -27,12 +27,12 @@ const Home = () => (
     <Overlay />
     <Content>
       <Textcontent>
-        <H1>
+        <Title>
           <Typist startDelay={500} cursor={{ hideWhenDone: true }}>
             Welcome to Adoptable Pets
           </Typist>
-        </H1>
-        <P>
+        </Title>
+        <Subtitle>
           <Typist startDelay={2800}>
             Ready to find your dream puppy?
             <Typist.Backspace count={6} delay={800} />
@@ -40,7 +40,7 @@ const Home = () => (
             <Typist.Backspace count={7} delay={800} />
             pet?
           </Typist>
-        </P>
+        </Subtitle>
       </Textcontent>
       <Button to="/dashboard">
         Find A Pet

@@ -1,16 +1,14 @@
 const styles = {
-  content: {
-    marginLeft: 25,
-  },
   avatar: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 300,
     fontSize: 100,
+    borderStyle: 'solid',
+    borderWidth: 8,
+    borderColor: '#E91E63',
   },
-  row: {
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: 10,
+  drawer: {
+    width: 260,
   },
 };
 
