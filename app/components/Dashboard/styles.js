@@ -1,6 +1,10 @@
 const styles = {
   grid: {
-    paddingTop: 80,
+    paddingTop: 20,
+  },
+  fixed: {
+    overflowY: 'auto',
+    maxHeight: '90vh',
   },
 };
 

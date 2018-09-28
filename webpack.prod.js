@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'production',
   entry: [
     './app/app.jsx',
   ],
@@ -34,8 +35,5 @@ module.exports = {
     path: `${__dirname}/dist`,
     publicPath: '/',
     filename: 'bundle.js',
-  },
-  devServer: {
-    contentBase: './dist',
   },
 };

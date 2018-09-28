@@ -17,9 +17,10 @@ const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
         alt=""
         src={singleAnimal.media.photos.photo.filter(x => x['@size'] === 'fpm')[0].$t}
         style={styles.avatar}
+        className="animated rubberBand"
       />
     ) : (
-      <Avatar style={styles.avatar}>
+      <Avatar style={styles.avatar} className="animated rubberBand">
         {singleAnimal.name.$t[0].toUpperCase()}
       </Avatar>
     );
@@ -35,7 +36,7 @@ const DisplayAnimal = ({ singleAnimal, animalClickHandler }) => {
       role="button"
       tabIndex={0}
     >
-      <List className="animated rubberBand">
+      <List>
         <ListItem button dense>
           {filterImgList}
           <ListItemText

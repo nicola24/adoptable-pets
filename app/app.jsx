@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 
 import 'animate.css/source/_base.css';
 import 'sanitize.css/sanitize.css';
+import 'react-typist/dist/Typist.css';
 
 import App from './components/App';
 

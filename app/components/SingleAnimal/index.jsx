@@ -13,47 +13,36 @@ import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import Drawer from '@material-ui/core/Drawer';
+
+import ImgGallery from '../ImgGallery';
 
 import 'animate.css/source/fading_entrances/fadeInRightBig.css';
-import Gallery from 'react-grid-gallery';
+import 'animate.css/source/attention_seekers/tada.css';
 import styles from './styles';
+import GalleryClick from './GalleryClick';
 
 const SingleAnimal = ({
-  singleAnimalDisplay, stateExpanded, onChangeExpanded, onChangeExpandedAbout,
-  stateExpandedAbout, onChangeExpandedHealth, stateExpandedHealth,
+  singleAnimalDisplay, stateExpandedInfo, handleExpand,
+  stateExpandedAbout, stateExpandedHealth, stateExpandedGallery,
 }) => {
-  const filterImgList = () => {
-    const imgs = [];
-    if (singleAnimalDisplay[0].media.photos) {
-      singleAnimalDisplay[0].media.photos.photo.forEach((x) => {
-        if (x['@size'] === 'x') {
-          imgs.push({
-            src: x.$t,
-            thumbnail: x.$t,
-            thumbnailWidth: 0,
-            thumbnailHeight: 0,
-            alt: 'img',
-          });
-        }
-      });
-      return (
-        <div style={styles.content}>
-          <Gallery
-            images={imgs}
-            margin={3}
-            enableImageSelection={false}
-          />
-        </div>
-      );
-    }
-    return (
-      <div style={styles.row}>
-        <Avatar style={styles.avatar}>
-          {singleAnimalDisplay[0].name.$t[0].toUpperCase()}
-        </Avatar>
-      </div>
-    );
-  };
+  const ImgOrAvatar = singleAnimalDisplay[0].media.photos ? (
+    <Grid item>
+      <GalleryClick onClick={() => handleExpand('expandedGallery')}>
+        <Avatar
+          style={styles.avatar}
+          alt="pet_img"
+          src={singleAnimalDisplay[0].media.photos.photo[2].$t}
+        />
+      </GalleryClick>
+    </Grid>
+  ) : (
+    <Grid item>
+      <Avatar style={styles.avatar}>
+        {singleAnimalDisplay[0].name.$t[0].toUpperCase()}
+      </Avatar>
+    </Grid>
+  );
 
   const breedList = Array.isArray(singleAnimalDisplay[0].breeds.breed)
     ? singleAnimalDisplay[0].breeds.breed.map(x => Object.values(x)).join(' & ')
@@ -79,9 +68,25 @@ const SingleAnimal = ({
   };
 
   return (
-    <Card className="animated fadeInRightBig">
+    <Card className="animated fadeInRightBig" style={styles.bottom}>
       <CardContent>
-        {filterImgList()}
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          {ImgOrAvatar}
+        </Grid>
+        <Drawer
+          anchor="right"
+          open={stateExpandedGallery}
+          onClose={() => handleExpand('expandedGallery')}
+        >
+          <div style={styles.drawer}>
+            <ImgGallery singleAnimalDisplay={singleAnimalDisplay} />
+          </div>
+        </Drawer>
       </CardContent>
       <CardContent>
         <Typography gutterBottom variant="display1" component="h2" color="primary">
@@ -102,7 +107,7 @@ const SingleAnimal = ({
         </Typography>
       </CardContent>
       <Typography variant="headline" color="primary">
-        <IconButton onClick={onChangeExpandedHealth}>
+        <IconButton onClick={(() => handleExpand('expandedHealth'))}>
           <ExpandMoreIcon />
         </IconButton>
         Health
@@ -115,7 +120,7 @@ const SingleAnimal = ({
         </CardContent>
       </Collapse>
       <Typography variant="headline" color="primary">
-        <IconButton onClick={onChangeExpandedAbout}>
+        <IconButton onClick={() => handleExpand('expandedAbout')}>
           <ExpandMoreIcon />
         </IconButton>
         About
@@ -128,45 +133,45 @@ const SingleAnimal = ({
         </CardContent>
       </Collapse>
       <Typography variant="headline" color="primary">
-        <IconButton onClick={onChangeExpanded}>
+        <IconButton onClick={() => handleExpand('expandedInfo')}>
           <ExpandMoreIcon />
         </IconButton>
         Contact Information
       </Typography>
-      <Collapse in={stateExpanded} timeout="auto" unmountOnExit>
+      <Collapse in={stateExpandedInfo} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph variant="subheading">
-            <Grid container spacing={16} alignItems="center">
-              <Grid item>
-                <LocationOn />
-              </Grid>
-              <Grid item>
+          <Grid container spacing={16} alignItems="baseline" justify="flex-start">
+            <Grid item>
+              <LocationOn />
+            </Grid>
+            <Grid item>
+              <Typography paragraph variant="subheading">
                 {singleAnimalDisplay[0].contact.address1.$t}
                 <br />
                 {fullAdress}
-              </Grid>
+              </Typography>
             </Grid>
-          </Typography>
-          <Typography paragraph variant="subheading">
-            <Grid container spacing={16} alignItems="center">
-              <Grid item>
-                <Phone />
-              </Grid>
-              <Grid item>
+          </Grid>
+          <Grid container spacing={16} alignItems="baseline" justify="flex-start">
+            <Grid item>
+              <Phone />
+            </Grid>
+            <Grid item>
+              <Typography paragraph variant="subheading">
                 {singleAnimalDisplay[0].contact.phone.$t}
-              </Grid>
+              </Typography>
             </Grid>
-          </Typography>
-          <Typography paragraph variant="subheading">
-            <Grid container spacing={16} alignItems="center">
-              <Grid item>
-                <Mail />
-              </Grid>
-              <Grid item>
+          </Grid>
+          <Grid container spacing={16} alignItems="baseline" justify="flex-start">
+            <Grid item>
+              <Mail />
+            </Grid>
+            <Grid item>
+              <Typography paragraph variant="subheading">
                 {singleAnimalDisplay[0].contact.email.$t}
-              </Grid>
+              </Typography>
             </Grid>
-          </Typography>
+          </Grid>
         </CardContent>
       </Collapse>
     </Card>
@@ -175,12 +180,11 @@ const SingleAnimal = ({
 
 SingleAnimal.propTypes = {
   singleAnimalDisplay: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onChangeExpanded: PropTypes.func.isRequired,
-  stateExpanded: PropTypes.bool.isRequired,
-  onChangeExpandedAbout: PropTypes.func.isRequired,
+  handleExpand: PropTypes.func.isRequired,
+  stateExpandedInfo: PropTypes.bool.isRequired,
   stateExpandedAbout: PropTypes.bool.isRequired,
-  onChangeExpandedHealth: PropTypes.func.isRequired,
   stateExpandedHealth: PropTypes.bool.isRequired,
+  stateExpandedGallery: PropTypes.bool.isRequired,
 };
 
 export default SingleAnimal;

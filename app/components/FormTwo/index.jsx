@@ -21,13 +21,12 @@ import styles from './styles';
 import DropDown from './DropDown';
 
 const FormTwo = ({
-  onFormFullSubmit, onChangeBreed, onChangeGender, onChangeAge,
-  onChangeSize, onChangeCount, stateBreedList, stateBreed, stateGender,
-  stateAge, stateSize, stateCount, stateExpandedForm, onChangeExpandedForm,
+  onFormFullSubmit, handleEvent, stateBreedList, stateBreed, stateGender,
+  stateAge, stateSize, stateCount, stateExpandedForm, handleExpand,
 }) => (
   <Card>
     <Typography variant="subheading">
-      <IconButton onClick={onChangeExpandedForm}>
+      <IconButton onClick={() => handleExpand('expandedForm')}>
         <ExpandMoreIcon />
       </IconButton>
       Advanced Search
@@ -36,7 +35,7 @@ const FormTwo = ({
       <CardContent>
         <form onSubmit={onFormFullSubmit}>
           <FormControl fullWidth>
-            <DropDown value={stateBreed} onChange={onChangeBreed}>
+            <DropDown value={stateBreed} onChange={handleEvent} name="breed">
               {stateBreedList.map(x => (
                 <option value={x.$t} key={x.$t}>
                   {x.$t}
@@ -48,8 +47,9 @@ const FormTwo = ({
             </FormHelperText>
             <RadioGroup
               value={stateGender}
-              onChange={onChangeGender}
+              onChange={handleEvent}
               style={styles.select}
+              name="gender"
             >
               <FormControlLabel value="M" control={<Radio color="primary" />} label="Male" />
               <FormControlLabel value="F" control={<Radio color="primary" />} label="Female" />
@@ -57,7 +57,7 @@ const FormTwo = ({
             <FormHelperText>
               Gender
             </FormHelperText>
-            <Select value={stateAge} onChange={onChangeAge} style={styles.select}>
+            <Select value={stateAge} onChange={handleEvent} style={styles.select} name="age">
               {animalAge.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
                   {x.option}
@@ -67,7 +67,7 @@ const FormTwo = ({
             <FormHelperText>
               Pick an age
             </FormHelperText>
-            <Select value={stateSize} onChange={onChangeSize} style={styles.select}>
+            <Select value={stateSize} onChange={handleEvent} style={styles.select} name="size">
               {animalSize.map(x => (
                 <MenuItem value={x.htmlValue} key={x.id}>
                   {x.option}
@@ -77,7 +77,7 @@ const FormTwo = ({
             <FormHelperText>
               Pick a size
             </FormHelperText>
-            <Select value={stateCount} onChange={onChangeCount} style={styles.select}>
+            <Select value={stateCount} onChange={handleEvent} style={styles.select} name="count">
               {moreResults.map(x => (
                 <MenuItem value={x.htmlValue} key={x.htmlValue}>
                   {x.htmlValue}
@@ -101,11 +101,7 @@ const FormTwo = ({
 
 FormTwo.propTypes = {
   onFormFullSubmit: PropTypes.func.isRequired,
-  onChangeBreed: PropTypes.func.isRequired,
-  onChangeGender: PropTypes.func.isRequired,
-  onChangeAge: PropTypes.func.isRequired,
-  onChangeSize: PropTypes.func.isRequired,
-  onChangeCount: PropTypes.func.isRequired,
+  handleEvent: PropTypes.func.isRequired,
   stateBreedList: PropTypes.arrayOf(PropTypes.object).isRequired,
   stateBreed: PropTypes.string.isRequired,
   stateGender: PropTypes.string.isRequired,
@@ -113,7 +109,7 @@ FormTwo.propTypes = {
   stateSize: PropTypes.string.isRequired,
   stateCount: PropTypes.string.isRequired,
   stateExpandedForm: PropTypes.bool.isRequired,
-  onChangeExpandedForm: PropTypes.func.isRequired,
+  handleExpand: PropTypes.func.isRequired,
 };
 
 export default FormTwo;

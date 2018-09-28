@@ -5,9 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import pink from '@material-ui/core/colors/pink';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Button from '@material-ui/core/Button';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ScrollToTop from 'react-scroll-up';
 
 import ListAnimals from '../ListAnimals';
 import SingleAnimal from '../SingleAnimal';
@@ -17,7 +14,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 
 import styles from './styles';
-import 'animate.css/source/fading_entrances/fadeInDownBig.css';
+import 'animate.css/source/bouncing_entrances/bounceIn.css';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -25,65 +22,37 @@ class Dashboard extends Component {
     this.state = {
       zipCode: '',
       animal: 'dog',
-      animals: [],
-      breedList: [],
+      count: '25',
       breed: '',
       gender: 'M',
       age: 'Baby',
       size: 'S',
+      animals: [],
+      breedList: [],
       currentAnimal: [],
-      count: '25',
       wrongZipcode: false,
-      expanded: false,
+      expandedInfo: false,
       expandedForm: false,
       expandedAbout: false,
       expandedHealth: false,
-      themeType: 'light',
+      expandedGallery: false,
+      theme: 'light',
     };
-    this.handleZipcode = this.handleZipcode.bind(this);
-    this.handleAnimal = this.handleAnimal.bind(this);
-    this.handleSubmitBasic = this.handleSubmitBasic.bind(this);
-    this.handleSubmitFull = this.handleSubmitFull.bind(this);
-    this.handleBreed = this.handleBreed.bind(this);
-    this.handleGender = this.handleGender.bind(this);
-    this.handleSize = this.handleSize.bind(this);
-    this.handleAge = this.handleAge.bind(this);
-    this.handleCount = this.handleCount.bind(this);
+    this.handleEvent = this.handleEvent.bind(this);
+    this.handleExpand = this.handleExpand.bind(this);
     this.handleAnimalClick = this.handleAnimalClick.bind(this);
-    this.fetchBreed = this.fetchBreed.bind(this);
-    this.handleExpandClick = this.handleExpandClick.bind(this);
-    this.handleExpandClickForm = this.handleExpandClickForm.bind(this);
-    this.handleExpandClickAbout = this.handleExpandClickAbout.bind(this);
-    this.handleExpandClickHealth = this.handleExpandClickHealth.bind(this);
     this.toggleTheme = this.toggleTheme.bind(this);
+    this.handleSubmitBasic = this.handleSubmitBasic.bind(this);
+    this.fetchBreed = this.fetchBreed.bind(this);
+    this.handleSubmitFull = this.handleSubmitFull.bind(this);
   }
 
-  handleZipcode(e) {
-    this.setState({ zipCode: e.target.value });
+  handleEvent(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleAnimal(e) {
-    this.setState({ animal: e.target.value });
-  }
-
-  handleBreed(e) {
-    this.setState({ breed: e.target.value });
-  }
-
-  handleGender(e) {
-    this.setState({ gender: e.target.value });
-  }
-
-  handleSize(e) {
-    this.setState({ size: e.target.value });
-  }
-
-  handleAge(e) {
-    this.setState({ age: e.target.value });
-  }
-
-  handleCount(e) {
-    this.setState({ count: e.target.value });
+  handleExpand(e) {
+    this.setState(state => ({ [e]: !state[e] }));
   }
 
   handleAnimalClick(id) {
@@ -92,28 +61,12 @@ class Dashboard extends Component {
     this.setState({ currentAnimal: animals.filter(x => x.id.$t === id) });
   }
 
-  handleExpandClick() {
-    this.setState(state => ({ expanded: !state.expanded }));
-  }
-
-  handleExpandClickForm() {
-    this.setState(state => ({ expandedForm: !state.expandedForm }));
-  }
-
-  handleExpandClickAbout() {
-    this.setState(state => ({ expandedAbout: !state.expandedAbout }));
-  }
-
-  handleExpandClickHealth() {
-    this.setState(state => ({ expandedHealth: !state.expandedHealth }));
-  }
-
   toggleTheme() {
-    const { themeType } = this.state;
+    const { theme } = this.state;
 
-    return themeType === 'light'
-      ? this.setState({ themeType: 'dark' })
-      : this.setState({ themeType: 'light' });
+    return theme === 'light'
+      ? this.setState({ theme: 'dark' })
+      : this.setState({ theme: 'light' });
   }
 
   handleSubmitBasic(e) {
@@ -171,23 +124,24 @@ class Dashboard extends Component {
       age,
       gender,
       wrongZipcode,
-      expanded,
+      expandedInfo,
       expandedForm,
       expandedAbout,
       expandedHealth,
-      themeType,
+      expandedGallery,
+      theme,
     } = this.state;
 
-    const theme = createMuiTheme({
+    const themeMode = createMuiTheme({
       palette: {
         primary: pink,
-        type: themeType,
+        type: theme,
       },
     });
 
     return (
-      <div className="animated fadeInDownBig">
-        <MuiThemeProvider theme={theme}>
+      <div className="animated bounceIn">
+        <MuiThemeProvider theme={themeMode}>
           <CssBaseline />
           <Header
             onToggleTheme={this.toggleTheme}
@@ -198,9 +152,7 @@ class Dashboard extends Component {
                 <Grid item>
                   <FormOne
                     onFormSubmit={this.handleSubmitBasic}
-                    onChangeZipcode={this.handleZipcode}
-                    onChangeAnimal={this.handleAnimal}
-                    onChangeCount={this.handleCount}
+                    handleEvent={this.handleEvent}
                     stateAnimal={animal}
                     stateCount={count}
                     stateWrongZipCode={wrongZipcode}
@@ -209,11 +161,7 @@ class Dashboard extends Component {
                 <Grid item>
                   <FormTwo
                     onFormFullSubmit={this.handleSubmitFull}
-                    onChangeBreed={this.handleBreed}
-                    onChangeGender={this.handleGender}
-                    onChangeAge={this.handleAge}
-                    onChangeSize={this.handleSize}
-                    onChangeCount={this.handleCount}
+                    handleEvent={this.handleEvent}
                     stateBreedList={breedList}
                     stateBreed={breed}
                     stateGender={gender}
@@ -221,7 +169,7 @@ class Dashboard extends Component {
                     stateSize={size}
                     stateCount={count}
                     stateExpandedForm={expandedForm}
-                    onChangeExpandedForm={this.handleExpandClickForm}
+                    handleExpand={this.handleExpand}
                   />
                 </Grid>
                 <Grid item>
@@ -229,7 +177,7 @@ class Dashboard extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4} style={styles.fixed}>
               {animals === undefined
                 ? (
                   <Typography align="center" variant="subheading">
@@ -251,21 +199,15 @@ class Dashboard extends Component {
                 : (
                   <SingleAnimal
                     singleAnimalDisplay={currentAnimal}
-                    stateExpanded={expanded}
-                    onChangeExpanded={this.handleExpandClick}
-                    onChangeExpandedAbout={this.handleExpandClickAbout}
+                    stateExpandedInfo={expandedInfo}
                     stateExpandedAbout={expandedAbout}
-                    onChangeExpandedHealth={this.handleExpandClickHealth}
                     stateExpandedHealth={expandedHealth}
+                    stateExpandedGallery={expandedGallery}
+                    handleExpand={this.handleExpand}
                   />
                 )}
             </Grid>
           </Grid>
-          <ScrollToTop showUnder={160}>
-            <Button variant="fab" color="primary" mini>
-              <ExpandLess />
-            </Button>
-          </ScrollToTop>
         </MuiThemeProvider>
       </div>
     );
