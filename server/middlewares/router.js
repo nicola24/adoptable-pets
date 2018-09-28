@@ -3,8 +3,8 @@ const request = require('request');
 
 const router = express.Router();
 
-const { apiKey } = require('../token.js');
-// const apiKey = process.env.API_KEY; // heroku token
+// const { apiKey } = require('../token.js');
+const apiKey = process.env.API_KEY; // heroku token
 
 const url = 'http://api.petfinder.com/';
 const format = 'format=json';
