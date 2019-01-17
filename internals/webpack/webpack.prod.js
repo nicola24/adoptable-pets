@@ -1,6 +1,5 @@
 module.exports = {
-  mode: 'development',
-  watch: true,
+  mode: 'production',
   entry: [
     './app/app.jsx',
   ],
@@ -33,17 +32,8 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   output: {
-    path: `${__dirname}/dist`,
+    path: `${__dirname}../../../dist`,
     publicPath: '/',
     filename: 'bundle.js',
-  },
-  devServer: {
-    contentBase: './dist',
-    watchContentBase: true,
-    port: 8080,
-    overlay: {
-      warnings: true,
-      errors: true,
-    },
   },
 };
